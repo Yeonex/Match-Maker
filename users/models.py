@@ -11,14 +11,14 @@ GENDER_TYPE = (
 
 # Create your models here.
 class Hobbies(models.Model):
-    name = models.CharField(max_length=200)
+    name = models.CharField(max_length=200, null=True)
 
 class Profile(models.Model):
     user = models.OneToOneField(User, unique = True, on_delete = models.CASCADE)
-    profile_pic = models.ImageField(upload_to = 'profile_pics/', default = 'pic_folder/None/no-img.jpg')
-    email = models.EmailField()
-    gender = models.CharField(choices = GENDER_TYPE, max_length=1)
-    date_of_birth = models.DateField()
+    profile_pic = models.ImageField(upload_to = 'profile_pics/', default = 'pic_folder/None/no-img.jpg', null=True)
+    email = models.EmailField(null=True)
+    gender = models.CharField(choices = GENDER_TYPE, max_length=1, null=True)
+    date_of_birth = models.DateField(null=True)
     hobbies = models.ManyToManyField('Hobbies')
     profile_requests = models.ManyToManyField('self')
     profile_connections = models.ManyToManyField('self')
