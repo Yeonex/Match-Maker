@@ -1,0 +1,9 @@
+{% extends 'base.html' %}
+
+{% block head %}
+<title>Matching site - Home</title>
+{% endblock %}
+
+{% block content %}
+<a href="{% url 'main_app:logout' %}?next={{ request.path }}">Logout</a>
+{% endblock %}
