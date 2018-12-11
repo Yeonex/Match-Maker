@@ -1,9 +1,109 @@
 {% extends 'base.html' %}
 
+{% load static %}
+
 {% block head %}
 <title>Matching site - Home</title>
+<link rel="stylesheet" href="{% static 'main_app/css/index.css' %}">
 {% endblock %}
 
 {% block content %}
-<a href="{% url 'main_app:logout' %}?next={{ request.path }}">Logout</a>
+<div class="row head justify-content-between">
+    <h1 class="col-6">Matching site</h1>
+    <div class="col-4 align-items-center justify-content-end row"><a class="col-auto" href="{% url 'main_app:logout' %}?next={{ request.path }}">Logout</a></div>
+</div>
+<div class="row no-gutters body">
+    <div class="col row no-gutters profiles">
+        <div class="col-2 profile-card">
+            <div class="card align-items-center text-center">
+                <div class="profile-picture col-8"></div>
+                <strong class="w-100">Name</strong>
+                <small class="w-100">Age | Location</small>
+                <small class="w-100">Hobby 1, Hobby 2</small>
+                <div class="like"><i class="fa-fw far fa-heart"></i></div>
+            </div>
+        </div>
+        <div class="col-2 profile-card">
+            <div class="card align-items-center text-center">
+                <div class="profile-picture col-8"></div>
+                <strong class="w-100">Name</strong>
+                <small class="w-100">Age | Location</small>
+                <small class="w-100">Hobby 1, Hobby 2</small>
+                <div class="like"><i class="fa-fw far fa-heart"></i></div>
+            </div>
+        </div>
+        <div class="col-2 profile-card">
+            <div class="card align-items-center text-center">
+                <div class="profile-picture col-8"></div>
+                <strong class="w-100">Name</strong>
+                <small class="w-100">Age | Location</small>
+                <small class="w-100">Hobby 1, Hobby 2</small>
+                <div class="like"><i class="fa-fw far fa-heart"></i></div>
+            </div>
+        </div>
+        <div class="col-2 profile-card">
+            <div class="card align-items-center text-center">
+                <div class="profile-picture col-8"></div>
+                <strong class="w-100">Name</strong>
+                <small class="w-100">Age | Location</small>
+                <small class="w-100">Hobby 1, Hobby 2</small>
+                <div class="like"><i class="fa-fw far fa-heart"></i></div>
+            </div>
+        </div>
+        <div class="col-2 profile-card">
+            <div class="card align-items-center text-center">
+                <div class="profile-picture col-8"></div>
+                <strong class="w-100">Name</strong>
+                <small class="w-100">Age | Location</small>
+                <small class="w-100">Hobby 1, Hobby 2</small>
+                <div class="like"><i class="fa-fw far fa-heart"></i></div>
+            </div>
+        </div>
+        <div class="col-2 profile-card">
+            <div class="card align-items-center text-center">
+                <div class="profile-picture col-8"></div>
+                <strong class="w-100">Name</strong>
+                <small class="w-100">Age | Location</small>
+                <small class="w-100">Hobby 1, Hobby 2</small>
+                <div class="like"><i class="fa-fw far fa-heart"></i></div>
+            </div>
+        </div>
+        <div class="col-2 profile-card">
+            <div class="card align-items-center text-center">
+                <div class="profile-picture col-8"></div>
+                <strong class="w-100">Name</strong>
+                <small class="w-100">Age | Location</small>
+                <small class="w-100">Hobby 1, Hobby 2</small>
+                <div class="like"><i class="fa-fw far fa-heart"></i></div>
+            </div>
+        </div>
+        <div class="col-2 profile-card">
+            <div class="card align-items-center text-center">
+                <div class="profile-picture col-8"></div>
+                <strong class="w-100">Name</strong>
+                <small class="w-100">Age | Location</small>
+                <small class="w-100">Hobby 1, Hobby 2</small>
+                <div class="like"><i class="fa-fw far fa-heart"></i></div>
+            </div>
+        </div>
+        <div class="col-2 profile-card">
+            <div class="card align-items-center text-center">
+                <div class="profile-picture col-8"></div>
+                <strong class="w-100">Name</strong>
+                <small class="w-100">Age | Location</small>
+                <small class="w-100">Hobby 1, Hobby 2</small>
+                <div class="like"><i class="fa-fw far fa-heart"></i></div>
+            </div>
+        </div>
+        <div class="col-2 profile-card">
+            <div class="card align-items-center text-center">
+                <div class="profile-picture col-8"></div>
+                <strong class="w-100">Name</strong>
+                <small class="w-100">Age | Location</small>
+                <small class="w-100">Hobby 1, Hobby 2</small>
+                <div class="like"><i class="fa-fw far fa-heart"></i></div>
+            </div>
+        </div>
+    </div>
+</div>
 {% endblock %}

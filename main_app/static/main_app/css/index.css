@@ -1,0 +1,46 @@
+.no-gutters > .profile-card{
+    padding: 1em;
+    transition: all 0.25s;
+}
+
+.profile-card:hover{
+    transform: scale(1.2);
+}
+
+.profile-card > .card{
+    height: 100%;
+}
+
+.profile-picture{
+    padding: 33.3333333% 0%;
+    background-size: cover;
+    background-position: center;
+    border-radius: 50%;
+    background-image: url("https://i0.wp.com/ebus.ca/wp-content/uploads/2017/08/profile-placeholder.jpg?ssl=1");
+    flex: unset;
+}
+
+.head{
+    padding: 1em;
+}
+
+.like{
+    font-size: 1.5em;
+    height: 1.5em;
+    color: #ff7070;
+    cursor: pointer;
+    transition: all 0.5s;
+}
+
+.like:active{
+    transform: scale(0.9);
+    transition: none;
+}
+
+.profiles:hover > .profile-card{
+    opacity: 0.75;
+}
+
+.profiles:hover > .profile-card:hover{
+    opacity: 1;
+}

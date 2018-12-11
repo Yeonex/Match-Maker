@@ -1,3 +1,5 @@
+/* @import url('https://fonts.googleapis.com/css?family=Roboto:300,400,700'); */
+
 html, body{
     height: 100%;
 }
@@ -6,10 +8,16 @@ body{
     background: #f2709c;  /* fallback for old browsers */
     background: -webkit-linear-gradient(to right, #ff9472, #f2709c);  /* Chrome 10-25, Safari 5.1-6 */
     background: linear-gradient(to right, #ff9472, #f2709c); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+    color: white;
+    /* font-family: 'Roboto', sans-serif; */
+}
+
+.login.content{
+    height: 100%;
 }
 
 .content{
-    height: 100%;
+    margin-top: 2em;
 }
 
 .login{
@@ -18,4 +26,5 @@ body{
 
 .card{
     padding: 1em;
+    color: #212121;
 }
