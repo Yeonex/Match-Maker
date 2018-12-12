@@ -25,8 +25,8 @@ class Profile(models.Model):
     hobbies = models.ManyToManyField('Hobbies')
     profile_requests = models.ManyToManyField('self')
     profile_connections = models.ManyToManyField('self')
-    def __str__(self):
-        return user.first_name
+    #def __str__(self):
+#        return user.first_name
 
 #Creates an instance of profile whenever a user object is created
 @receiver(post_save, sender = User)

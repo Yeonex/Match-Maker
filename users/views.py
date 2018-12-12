@@ -58,6 +58,15 @@ def get_liked_users(request):
     #Gets all users liked by this account
     return HttpResponse("Liked users returned")
 
+@require_http_methods(["PUT"])
 def liked_user(request, user_id):
     #Like user
-    return HttpResponse("Liked " + str(user_id))
+    if request.method == "PUT":
+        current_user = request.user
+        user_to_like = user = get_object_or_404(User, pk=user_id)
+        if user_to_like in current_user.profile.profile_connections:
+            current_user.profile.profile_connections.remove(user_to_like)
+        else:
+            current_user.profile.profile_connections.add(user_to_like)
+
+    return HttpResponse("Success")
