@@ -44,6 +44,14 @@
                         .prop('checked', liked)
                     )
                     .append('<i class="fa-fw far fa-heart"></i><i class="fa-fw fas fa-heart"></i>')
+					.click((e) => {$.ajax({
+						url:"users/like/"+ id + "/",
+						type:"PUT",
+						data:{csrfmiddlewaretoken:csrf},
+						success: function(response){
+							console.log('this was ' + liked)
+						}
+					})})
                 )
             )
         );
@@ -51,7 +59,21 @@
 
     $(document).ready(function(){
         //Load profiles here
-        for(let i = 0; i < 10; i++){
+        
+			$.ajax({
+				url:"/users",
+				type:"GET",
+				success:function(d){
+					console.log(d);
+					for(let i = 0; i < d.length; i++){
+						var ageDifMs = Date.now() - new Date(d[i].date_of_birth);
+						var ageDate = new Date(ageDifMs);
+						var age = Math.abs(ageDate.getUTCFullYear() - 1970);
+						$('#profiles').append(getProfileCard(i+10,'https://amp.businessinsider.com/images/5899ffcf6e09a897008b5c04-750-750.jpg', d[i].first_name, age, [d[i].hobbies,'null'], false))
+					}
+				}
+			});
+			for(let i = 0; i < 10; i++){
             $('#profiles').append(getProfileCard(i, '', 'Name', 'Age', ['Hobby 1', 'Hobby 2'], Math.random() >= 0.5));
         }
     });
