@@ -5,6 +5,8 @@ from django.contrib.auth.models import User
 from django.views.decorators.http import require_http_methods
 from django.contrib.auth.decorators import login_required
 
+#from django.views.decorators.csrf import csrf_exempt
+
 
 # Create your views here.
 @require_http_methods(["GET", "POST"])
@@ -17,7 +19,7 @@ def index(request):
         for user in users:
             hobbies = []
             liked = False
-            if current_user in user.profile.profile_connections.all():
+            if current_user.profile in user.profile.profile_connections.all():
                 liked = True
             for hobby in user.profile.hobbies.all():
                 hobbies.append(str(hobby))
@@ -30,7 +32,7 @@ def index(request):
                 "gender" : user.profile.gender,
                 "date_of_birth" : user.profile.date_of_birth,
                 "hobbies" : hobbies,
-                "liked" : "True"
+                "liked" : liked
             }
             json.append(j)
     return JsonResponse(json, safe=False)
@@ -58,15 +60,18 @@ def get_liked_users(request):
     #Gets all users liked by this account
     return HttpResponse("Liked users returned")
 
+
 @require_http_methods(["PUT"])
 def liked_user(request, user_id):
     #Like user
-    if request.method == "PUT":
-        current_user = request.user
-        user_to_like = user = get_object_or_404(User, pk=user_id)
-        if user_to_like in current_user.profile.profile_connections:
-            current_user.profile.profile_connections.remove(user_to_like)
-        else:
-            current_user.profile.profile_connections.add(user_to_like)
-
+    current_user = request.user
+    user_to_like = get_object_or_404(User, pk=user_id)
+    if user_to_like.profile in current_user.profile.profile_connections.all():
+        print("Remove Like")
+        current_user.profile.profile_connections.remove(user_to_like.profile)
+        current_user.save()
+    else:
+        print("Add Like")
+        current_user.profile.profile_connections.add(user_to_like.profile)
+        current_user.save()
     return HttpResponse("Success")
