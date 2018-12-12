@@ -52,14 +52,12 @@
 
 .like > label > input ~ i.fas{
     opacity: 0;
-    transform: translate(-50%, -50%) scale(0.25);
-    transition: all 0.5s ease-out;
+    transition: all 0.2s ease-out;
     pointer-events: none;
 }
 
 .like > label > input:checked ~ i.fas{
     opacity: 1;
-    transform: translate(-50%, -50%) scale(1);
     pointer-events: all;
     transition: opacity 0.1s;
 }
@@ -69,13 +67,13 @@
     transition: none;
 }
 
-#profiles:hover > .profile-card{
+/* #profiles:hover > .profile-card{
     opacity: 0.75;
 }
 
 #profiles:hover > .profile-card:hover{
     opacity: 1;
-}
+} */
 
 input.search{
     border-top-right-radius: 0em;

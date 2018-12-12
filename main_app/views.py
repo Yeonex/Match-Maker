@@ -7,3 +7,8 @@ from django.contrib.auth.decorators import login_required
 @require_http_methods(["GET"])
 def index(request):
     return render(request, 'main_app/index.html')
+
+@login_required
+@require_http_methods(["GET"])
+def profile(request):
+    return render(request, 'main_app/profile.html')

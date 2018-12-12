@@ -76,7 +76,7 @@ $(document).ready(function(){
                 var ageDifMs = Date.now() - new Date(d[i].date_of_birth);
                 var ageDate = new Date(ageDifMs);
                 var age = Math.abs(ageDate.getUTCFullYear() - 1970);
-                $('#profiles').append(getProfileCard(i+10,d[i].profile_pic, d[i].first_name, age, d[i].gender, [d[i].hobbies,'null'], false))
+                $('#profiles').append(getProfileCard(d[i].id,d[i].profile_pic, d[i].first_name, age, d[i].gender, d[i].hobbies, d[i].liked === "True"));
             }
         }
     });
