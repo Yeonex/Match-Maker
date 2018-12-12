@@ -49,7 +49,14 @@ function getProfileCard(id, imageUrl, name, age, gender, hobbies, liked){
                         type:"PUT",
                         success: function(response){
                             console.log(response);
-                        }
+							var audioElement = document.createElement("audio");
+							audioElement.src ="/media/profile_pics/like.ogg";
+							console.log('this was ' + liked);
+							audioElement.play();
+                        },
+						error:function(XMLHttpRequest, textStatus, errorThrown){
+							console.log(errorThrown)
+						}
                     })})
                 )
                 .append('<i class="fa-fw far fa-heart"></i><i class="fa-fw fas fa-heart"></i>')
