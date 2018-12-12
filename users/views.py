@@ -46,6 +46,6 @@ def get_liked_users(request):
     #Gets all users liked by this account
     return HttpResponse("Liked users returned")
 
-def liked_user(request, user_id_to_like):
+def liked_user(request, user_id):
     #Like user
-    return HttpResponse("Like a user")
+    return HttpResponse("Liked " + str(user_id))

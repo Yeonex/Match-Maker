@@ -12,7 +12,17 @@
 	src="https://code.jquery.com/jquery-3.3.1.min.js"
 	integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
 	crossorigin="anonymous"></script>
-		<script>var csrf ='{{csrf_token}}'</script>
+        <script>
+            var csrf ='{{csrf_token}}';
+            $.ajaxSetup({
+                beforeSend: (xhr, settings)=>{
+                    if (!(/^http:.*/.test(settings.url) || /^https:.*/.test(settings.url))) {
+                        // Only send the token to relative URLs i.e. locally.
+                        xhr.setRequestHeader("X-CSRFToken", csrf);
+                    }
+                }
+            });
+        </script>
         {% block head %}
         {% endblock %}
     </head>
