@@ -8,102 +8,82 @@
 {% endblock %}
 
 {% block content %}
-<div class="row head justify-content-between">
+<div class="row head justify-content-between pt-3">
     <h1 class="col-6">Matching site</h1>
     <div class="col-4 align-items-center justify-content-end row"><a class="col-auto" href="{% url 'main_app:logout' %}?next={{ request.path }}">Logout</a></div>
 </div>
-<div class="row no-gutters body">
-    <div class="col row no-gutters profiles">
-        <div class="col-xl-2 col-lg-3 col-md-4 col-6 profile-card">
-            <div class="card align-items-center text-center">
-                <div class="profile-picture col-8"></div>
-                <strong class="w-100">Name</strong>
-                <small class="w-100">Age | Location</small>
-                <small class="w-100">Hobby 1, Hobby 2</small>
-                <div class="like"><i class="fa-fw far fa-heart"></i></div>
+<div class="row filtering mt-3">
+    <div class="col-10">
+        <div class="row no-gutters">
+            <div class="col-11">
+                <input class="form-control w-100 search" placeholder="Search">
             </div>
-        </div>
-        <div class="col-xl-2 col-lg-3 col-md-4 col-6 profile-card">
-            <div class="card align-items-center text-center">
-                <div class="profile-picture col-8"></div>
-                <strong class="w-100">Name</strong>
-                <small class="w-100">Age | Location</small>
-                <small class="w-100">Hobby 1, Hobby 2</small>
-                <div class="like"><i class="fa-fw far fa-heart"></i></div>
-            </div>
-        </div>
-        <div class="col-xl-2 col-lg-3 col-md-4 col-6 profile-card">
-            <div class="card align-items-center text-center">
-                <div class="profile-picture col-8"></div>
-                <strong class="w-100">Name</strong>
-                <small class="w-100">Age | Location</small>
-                <small class="w-100">Hobby 1, Hobby 2</small>
-                <div class="like"><i class="fa-fw far fa-heart"></i></div>
-            </div>
-        </div>
-        <div class="col-xl-2 col-lg-3 col-md-4 col-6 profile-card">
-            <div class="card align-items-center text-center">
-                <div class="profile-picture col-8"></div>
-                <strong class="w-100">Name</strong>
-                <small class="w-100">Age | Location</small>
-                <small class="w-100">Hobby 1, Hobby 2</small>
-                <div class="like"><i class="fa-fw far fa-heart"></i></div>
-            </div>
-        </div>
-        <div class="col-xl-2 col-lg-3 col-md-4 col-6 profile-card">
-            <div class="card align-items-center text-center">
-                <div class="profile-picture col-8"></div>
-                <strong class="w-100">Name</strong>
-                <small class="w-100">Age | Location</small>
-                <small class="w-100">Hobby 1, Hobby 2</small>
-                <div class="like"><i class="fa-fw far fa-heart"></i></div>
-            </div>
-        </div>
-        <div class="col-xl-2 col-lg-3 col-md-4 col-6 profile-card">
-            <div class="card align-items-center text-center">
-                <div class="profile-picture col-8"></div>
-                <strong class="w-100">Name</strong>
-                <small class="w-100">Age | Location</small>
-                <small class="w-100">Hobby 1, Hobby 2</small>
-                <div class="like"><i class="fa-fw far fa-heart"></i></div>
-            </div>
-        </div>
-        <div class="col-xl-2 col-lg-3 col-md-4 col-6 profile-card">
-            <div class="card align-items-center text-center">
-                <div class="profile-picture col-8"></div>
-                <strong class="w-100">Name</strong>
-                <small class="w-100">Age | Location</small>
-                <small class="w-100">Hobby 1, Hobby 2</small>
-                <div class="like"><i class="fa-fw far fa-heart"></i></div>
-            </div>
-        </div>
-        <div class="col-xl-2 col-lg-3 col-md-4 col-6 profile-card">
-            <div class="card align-items-center text-center">
-                <div class="profile-picture col-8"></div>
-                <strong class="w-100">Name</strong>
-                <small class="w-100">Age | Location</small>
-                <small class="w-100">Hobby 1, Hobby 2</small>
-                <div class="like"><i class="fa-fw far fa-heart"></i></div>
-            </div>
-        </div>
-        <div class="col-xl-2 col-lg-3 col-md-4 col-6 profile-card">
-            <div class="card align-items-center text-center">
-                <div class="profile-picture col-8"></div>
-                <strong class="w-100">Name</strong>
-                <small class="w-100">Age | Location</small>
-                <small class="w-100">Hobby 1, Hobby 2</small>
-                <div class="like"><i class="fa-fw far fa-heart"></i></div>
-            </div>
-        </div>
-        <div class="col-xl-2 col-lg-3 col-md-4 col-6 profile-card">
-            <div class="card align-items-center text-center">
-                <div class="profile-picture col-8"></div>
-                <strong class="w-100">Name</strong>
-                <small class="w-100">Age | Location</small>
-                <small class="w-100">Hobby 1, Hobby 2</small>
-                <div class="like"><i class="fa-fw far fa-heart"></i></div>
+            <div class="col-1">
+                <button class="btn btn-primary w-100 search">Search</button>
             </div>
         </div>
     </div>
+    <div class="col-2">
+        <button class="btn btn-primary w-100">Filter</button>
+    </div>
 </div>
+<div class="row mt-4" id="profiles">
+</div>
+<script>
+    function getProfilePicture(imageUrl){
+        if(!imageUrl)
+            return $("<div>").addClass('profile-picture col-8');
+        return $("<div>")
+        .addClass('profile-picture col-8')
+        .css('background-image', 'url(' + imageUrl + ')');
+    }
+
+    function getProfileCard(id, imageUrl, name, age, hobbies, liked){
+        return $("<div>")
+        .addClass('col-xl-2 col-lg-3 col-sm-4 col-6 profile-card mb-4')
+        .append(
+            $("<div>")
+            .addClass('card align-items-center text-center')
+            .append(
+                getProfilePicture(imageUrl)
+            )
+            .append(
+                $("<strong>")
+                .addClass('w-100')
+                .html(name)
+            )
+            .append(
+                $("<small>")
+                .addClass('w-100')
+                .html('Age: ' + age)
+            )
+            .append(
+                $("<small>")
+                .addClass('w-100')
+                .html(hobbies.join(", "))
+            )
+            .append(
+                $("<div>")
+                .addClass('like')
+                .append(
+                    $("<label>")
+                    .attr('for', id)
+                    .append(
+                        $("<input>")
+                        .attr('type', 'checkbox')
+                        .attr('id', id)
+                        .prop('checked', liked)
+                    )
+                    .append('<i class="fa-fw far fa-heart"></i><i class="fa-fw fas fa-heart"></i>')
+                )
+            )
+        );
+    }
+
+    $(document).ready(function(){
+        for(let i = 0; i < 10; i++){
+            $('#profiles').append(getProfileCard(i, '', 'Name', 'Age', ['Hobby 1', 'Hobby 2'], Math.random() >= 0.5));
+        }
+    });
+</script>
 {% endblock %}

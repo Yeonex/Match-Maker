@@ -1,10 +1,10 @@
-.no-gutters > .profile-card{
-    padding: 1em;
-    transition: all 0.25s;
+.profile-card{
+    transition: all 0.2s;
 }
 
 .profile-card:hover{
     transform: scale(1.2);
+    z-index: 1;
 }
 
 .profile-card > .card{
@@ -20,27 +20,66 @@
     flex: unset;
 }
 
-.head{
-    padding: 1em;
-}
-
 .like{
     font-size: 1.5em;
     height: 1.5em;
     color: #ff7070;
     cursor: pointer;
     transition: all 0.5s;
+    position: relative;
+    width: 1.5em;
+}
+
+.like *{
+    cursor: pointer;
+}
+
+.like > label > input{
+    display: none;
+}
+
+.like > label > i{
+    position: absolute;
+    transform: translate(-50%, -50%);
+    transition: opacity 0.2s;
+}
+
+.like > label > input:checked ~ i.far{
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(2);
+    transition: all 1s ease-out;
+}
+
+.like > label > input ~ i.fas{
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(0.5);
+    transition: all 0.5s;
+}
+
+.like > label > input:checked ~ i.fas{
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1);
 }
 
 .like:active{
-    transform: scale(0.9);
+    transform: scale(0.8);
     transition: none;
 }
 
-.profiles:hover > .profile-card{
+#profiles:hover > .profile-card{
     opacity: 0.75;
 }
 
-.profiles:hover > .profile-card:hover{
+#profiles:hover > .profile-card:hover{
     opacity: 1;
+}
+
+input.search{
+    border-top-right-radius: 0em;
+    border-bottom-right-radius: 0em;
+}
+
+button.search{
+    border-top-left-radius: 0em;
+    border-bottom-left-radius: 0em;
 }

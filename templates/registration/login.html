@@ -2,6 +2,9 @@
 
 {% block head %}
 <title>Matching site - Login</title>
+<style>
+    .content{height: 100%;}
+</style>
 {% endblock %}
 
 {% block content %}
@@ -12,6 +15,7 @@
             {% csrf_token %}
             {{ form.as_p }}
             <button type="submit" class="btn btn-primary">Login</button>
+            <button class="btn btn-primary mt-3">Sign up</button>
         </form>
     </div>
 </div>
