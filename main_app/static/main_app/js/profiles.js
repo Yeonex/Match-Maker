@@ -65,6 +65,15 @@ function getProfileCard(id, imageUrl, name, age, gender, hobbies, liked){
     );
 }
 
+function getSimilarity(a, b){
+    let similar = 0;
+    for(let i = 0; i < a.hobbies.length; i++){
+        if(b.hobbies.includes(a.hobbies[i]))
+            similar ++;
+    }
+    return similar;
+}
+
 $(document).ready(function(){
     //Load profiles here
     $.ajax({
@@ -72,8 +81,11 @@ $(document).ready(function(){
         type:"GET",
         success:function(data){
             console.log(data);
-            //data.current_user
+            current_user = data.current_user;
             d = data.others;
+            d.sort((a,b)=>{
+                return getSimilarity(b, current_user) - getSimilarity(a, current_user);
+            });
             for(let i = 0; i < d.length; i++){
                 var ageDifMs = Date.now() - new Date(d[i].date_of_birth);
                 var ageDate = new Date(ageDifMs);
