@@ -27,7 +27,6 @@ def getUserDict(request, user):
         "liked" : liked
     }
 
-# Create your views here.
 @require_http_methods(["GET", "POST"])
 def index(request):
     #get and post in index for posting
@@ -57,7 +56,8 @@ def user_info(request, user_id):
         "profile_pic" : user.profile.profile_pic.url,
         "gender" : user.profile.gender,
         "date_of_birth" : user.profile.date_of_birth,
-        "hobbies" : hobbies
+        "hobbies" : hobbies,
+        "liked_count" : user.profile.profile_connections.count()
         }
     return JsonResponse(json, safe=False)
 
@@ -76,11 +76,11 @@ def liked_user(request, user_id):
     current_user = request.user
     user_to_like = get_object_or_404(User, pk=user_id)
     if user_to_like.profile in current_user.profile.profile_connections.all():
-        print("Remove Like")
         current_user.profile.profile_connections.remove(user_to_like.profile)
         current_user.save()
+        print("Remove Like")
     else:
-        print("Add Like")
         current_user.profile.profile_connections.add(user_to_like.profile)
         current_user.save()
+        print("Add Like")
     return HttpResponse("Success")
