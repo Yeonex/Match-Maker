@@ -23,6 +23,11 @@ a{
     padding-right: 0.5em;
 }
 
+a.button{
+    padding-right: 0em;
+    padding-left: 0em;
+}
+
 a:hover{
     color: #2f2f2f;
     background: rgba(255,255,255,0.9);

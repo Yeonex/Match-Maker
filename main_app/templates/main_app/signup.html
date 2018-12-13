@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 
 {% block head %}
-<title>Matching site - Login</title>
+<title>Matching site - Sign up</title>
 <style>
     .content{height: 100%;}
 </style>
@@ -11,12 +11,12 @@
 <div class="login row align-items-center justify-content-center">
     <div class="col col-md-6">
         <form method="post" class="card">
-            <h2>Login</h2>
+            <h2>Sign up</h2>
             {% csrf_token %}
             {{ form.as_p }}
             <div class="form-group text-right">
-                <a class="button" href="{% url 'main_app:sign_up' %}"><div class="btn btn-secondary">Sign up</div></a>
-                <button type="submit" class="btn btn-primary">Login</button>
+                <a class="button" href="{% url 'main_app:login' %}"><div class="btn btn-secondary">Log in</div></a>
+                <button type="submit" class="btn btn-primary">Sign up</button>
             </div>
         </form>
     </div>
