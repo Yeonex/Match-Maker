@@ -1,0 +1,37 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block head %}
+<title>Matching site - Profile</title>
+<link rel="stylesheet" href="{% static 'main_app/css/profile.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="row head justify-content-between pt-3">
+    <h1 class="col-6 display-3">Matching site</h1>
+    <nav class="col-4 align-items-center justify-content-end row">
+        <div class="col-auto">
+            <a href="{% url 'main_app:index' %}">Home</a>
+        </div>
+        <div class="col-auto">
+            <a href="{% url 'main_app:logout' %}?next={{ request.path }}">Logout</a>
+        </div>
+    </nav>
+</div>
+<div class="row mt-4" id="profile">
+    <div class="col card">
+        <h1 class="display-4 mb-4">Your profile</h1>
+        <div class="row">
+            <div class="col-3"><div class="profile-picture"></div></div>
+            <div class="col-auto info">
+                <h4>Full Name</h4>
+                <div>Gender: <span id="gender">M</span></div>
+                <div>Date of birth: <span id="dob">1st Jan 2000</span></div>
+                <div>Hobbies: <span id="hobbies">Hobby 1, Hobby 2</span></div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="{% static 'main_app/js/profile.js' %}"></script>
+{% endblock %}
