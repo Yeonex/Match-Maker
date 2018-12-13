@@ -70,8 +70,10 @@ $(document).ready(function(){
     $.ajax({
         url:"/users",
         type:"GET",
-        success:function(d){
-            console.log(d);
+        success:function(data){
+            console.log(data);
+            //data.current_user
+            d = data.others;
             for(let i = 0; i < d.length; i++){
                 var ageDifMs = Date.now() - new Date(d[i].date_of_birth);
                 var ageDate = new Date(ageDifMs);

@@ -7,6 +7,25 @@ from django.contrib.auth.decorators import login_required
 
 #from django.views.decorators.csrf import csrf_exempt
 
+def getUserDict(request, user):
+    current_user = request.user
+    hobbies = []
+    liked = False
+    if current_user.profile in user.profile.profile_connections.all():
+        liked = True
+    for hobby in user.profile.hobbies.all():
+        hobbies.append(str(hobby))
+    return {
+        "id" : user.id,
+        "first_name" : user.first_name,
+        "last_name" : user.last_name,
+        "email" : user.email,
+        "profile_pic" : user.profile.profile_pic.url,
+        "gender" : user.profile.gender,
+        "date_of_birth" : user.profile.date_of_birth,
+        "hobbies" : hobbies,
+        "liked" : liked
+    }
 
 # Create your views here.
 @require_http_methods(["GET", "POST"])
@@ -17,25 +36,12 @@ def index(request):
         current_user = request.user
         users = User.objects.all()
         for user in users:
-            hobbies = []
-            liked = False
-            if current_user.profile in user.profile.profile_connections.all():
-                liked = True
-            for hobby in user.profile.hobbies.all():
-                hobbies.append(str(hobby))
-            j = {
-                "id" : user.id,
-                "first_name" : user.first_name,
-                "last_name" : user.last_name,
-                "email" : user.email,
-                "profile_pic" : user.profile.profile_pic.url,
-                "gender" : user.profile.gender,
-                "date_of_birth" : user.profile.date_of_birth,
-                "hobbies" : hobbies,
-                "liked" : liked
-            }
+            if user.id == current_user.id:
+                continue
+            j = getUserDict(request, user)
             json.append(j)
-    return JsonResponse(json, safe=False)
+        return JsonResponse({"current_user":getUserDict(request, current_user),"others":json}, safe=False)
+    return HttpResponse("POST todo")
 
 @require_http_methods(["GET"])
 def user_info(request, user_id):
