@@ -27,7 +27,13 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
-
+#EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_USE_TLS = True
+EMAIL_PORT = 587
+EMAIL_HOST = "smtp.gmail.com"
+EMAIL_HOST_USER = "pingulancelotiii@gmail.com"
+EMAIL_HOST_PASSWORD = "PinguLancelot!!!"
+#send_mail('From django', 'Test email from dj manage', 'pingulancelotiii@gmail.com', ['thematchingsite@shayzam.net'])
 # Application definition
 
 INSTALLED_APPS = [

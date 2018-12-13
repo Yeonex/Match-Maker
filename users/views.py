@@ -4,6 +4,7 @@ from .models import Profile, Hobbies
 from django.contrib.auth.models import User
 from django.views.decorators.http import require_http_methods
 from django.contrib.auth.decorators import login_required
+from django.core.mail import send_mail, EmailMessage
 
 #from django.views.decorators.csrf import csrf_exempt
 
@@ -61,8 +62,10 @@ def user_info(request, user_id):
         }
     return JsonResponse(json, safe=False)
 
-@require_http_methods(["GET"])
+@require_http_methods(["GET", "PUT"])
 def current_user_info(request):
+    #if request.method == "PUT":
+
     return JsonResponse(getUserDict(request, request.user), safe=False)
 
 def get_liked_users(request):
@@ -78,9 +81,14 @@ def liked_user(request, user_id):
     if user_to_like.profile in current_user.profile.profile_connections.all():
         current_user.profile.profile_connections.remove(user_to_like.profile)
         current_user.save()
-        print("Remove Like")
     else:
         current_user.profile.profile_connections.add(user_to_like.profile)
         current_user.save()
-        print("Add Like")
+
+        email = EmailMessage(
+        'You have a new match!',
+        'Congratulations, {} you have been liked by {}'.format(user_to_like.first_name, current_user.first_name),
+        'apikey',
+        [user_to_like.profile.email])
+        email.send()
     return HttpResponse("Success")
