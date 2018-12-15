@@ -92,3 +92,16 @@ def liked_user(request, user_id):
         [user_to_like.profile.email])
         email.send()
     return HttpResponse("Success")
+
+@require_http_methods(["GET"])
+def filter_by_age(request, max_age, min_age):
+    json = []
+    current_user = request.user
+    users = User.objects.all()
+    for user in users:
+        age = Profile.get_age(user.id)
+        if min_age <= age <= max_age:
+            j = getUserDict(request, user)
+            json.append(j)
+
+    return JsonResponse({"current_user": getUserDict(request, current_user), "others": json}, safe=False)
