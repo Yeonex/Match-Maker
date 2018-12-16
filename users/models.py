@@ -21,7 +21,7 @@ class Hobbies(models.Model):
 
 class Profile(models.Model):
     user = models.OneToOneField(User, unique=True, on_delete=models.CASCADE)
-    profile_pic = models.ImageField(upload_to='profile_pics/', default='pic_folder/None/no-img.jpg', null=True)
+    profile_pic = models.ImageField(upload_to='profile_pics/', null=True)
     email = models.EmailField(null=True)
     gender = models.CharField(choices=GENDER_TYPE, max_length=1, null=True)
     date_of_birth = models.DateField(null=True)

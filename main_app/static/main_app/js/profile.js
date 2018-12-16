@@ -3,11 +3,9 @@ function getProfileCard(picture, name, age, gender, hobbies){
 	$("#gender").text(gender);
 	$("#dob").text(age);
 	$("#hobbies").text(hobbies.join(", "));
-	$("#profile-picture").css("background-image","url("+picture+")");
+	if(picture)
+		$("#profile-picture").css("background-image","url("+picture+")");
 }
-
-
-
 
 $(document).ready(function(){
 	$.ajax({

@@ -21,7 +21,7 @@ def getUserDict(request, user):
         "first_name" : user.first_name,
         "last_name" : user.last_name,
         "email" : user.email,
-        "profile_pic" : user.profile.profile_pic.url,
+        "profile_pic" : user.profile.profile_pic.url if user.profile.profile_pic else '',
         "gender" : user.profile.gender,
         "date_of_birth" : user.profile.date_of_birth,
         "hobbies" : hobbies,

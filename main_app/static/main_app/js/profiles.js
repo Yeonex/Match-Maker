@@ -12,7 +12,6 @@ function getProfileCard(id, imageUrl, name, age, gender, hobbies, liked){
     .append(
         $("<div>")
         .addClass('card align-items-center text-center')
-		.attr('id','name')
         .append(
             getProfilePicture(imageUrl)
         )
@@ -66,8 +65,8 @@ function getProfileCard(id, imageUrl, name, age, gender, hobbies, liked){
                 .append('<i class="fa-fw far fa-heart"></i><i class="fa-fw fas fa-heart"></i>')
             )
         )
-		
-    ).attr("id", "profile" + id);
+    )
+    .attr("id", "profile" + id);
 }
 
 function getSimilarity(a, b){

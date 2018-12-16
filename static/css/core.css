@@ -53,3 +53,26 @@ a:hover{
 .login .card{
     padding: 2em;
 }
+
+.helptext{
+    font-size: 0.75em;
+}
+
+.errorlist{
+    color: #ff2020;
+    font-size: 0.75em;
+    list-style: none;
+    padding-left: 0px;
+    margin-bottom: 0px;
+}
+
+.errorlist li::before{
+    content: "\f057";
+    font-family: "Font Awesome 5 Free";
+    font-weight: 900;
+    padding-right: 0.5em;
+}
+
+.errorlist + p input{
+    border-color: #ff2020;
+}
