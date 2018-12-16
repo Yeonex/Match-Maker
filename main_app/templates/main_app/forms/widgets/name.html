@@ -1,0 +1,5 @@
+<span {% include "django/forms/widgets/attrs.html" %}>
+    {% for w in widget.subwidgets %}
+            {% include w.template_name with widget=w %}
+    {% endfor %}
+</span>

@@ -14,7 +14,7 @@
             <h2 class="display-4 mb-4">Login</h2>
             {% csrf_token %}
             {{ form.as_p }}
-            <div class="form-group text-right">
+            <div class="form-group text-right mb-0">
                 <a class="button" href="{% url 'main_app:sign_up' %}"><div class="btn btn-secondary">Sign up</div></a>
                 <button type="submit" class="btn btn-primary">Login</button>
             </div>
