@@ -105,3 +105,10 @@ def filter_by_age(request, max_age, min_age):
             json.append(j)
 
     return JsonResponse({"current_user": getUserDict(request, current_user), "others": json}, safe=False)
+
+@require_http_methods(["GET"])
+def hobbies(request):
+    json = []
+    for hobby in Hobbies.objects.all():
+        json.append({'value':hobby.id, 'name':hobby.name})
+    return JsonResponse(json, safe=False)
