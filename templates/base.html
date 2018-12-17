@@ -28,6 +28,15 @@
     </head>
     <body>
         <div class="container content">
+            <div class="row head justify-content-between pt-3">
+                <h1 class="col-lg-6 col-12 display-3 text-lg-left text-center">Match Maker</h1>
+                <nav class="col-lg-4 col-12">
+                    <div class="align-items-center justify-content-center justify-content-lg-end row h-100">
+                        {% block nav %}
+                        {% endblock %}
+                    </div>
+                </nav>
+            </div>
             {% block content %}
             {% endblock %}
         </div>

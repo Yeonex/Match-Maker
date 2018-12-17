@@ -7,18 +7,16 @@
 <link rel="stylesheet" href="{% static 'main_app/css/profile.css' %}">
 {% endblock %}
 
-{% block content %}
-<div class="row head justify-content-between pt-3">
-    <h1 class="col-6 display-3">Matching site</h1>
-    <nav class="col-4 align-items-center justify-content-end row">
-        <div class="col-auto">
-            <a href="{% url 'main_app:index' %}"><i class="fas fa-home fa-fw"></i> Home</a>
-        </div>
-        <div class="col-auto">
-            <a href="{% url 'main_app:logout' %}?next={{ request.path }}"><i class="fas fa-sign-out-alt fa-fw"></i> Logout</a>
-        </div>
-    </nav>
+{% block nav %}
+<div class="col-auto">
+    <a href="{% url 'main_app:index' %}"><i class="fas fa-home fa-fw"></i> Home</a>
 </div>
+<div class="col-auto">
+    <a href="{% url 'main_app:logout' %}?next={{ request.path }}"><i class="fas fa-sign-out-alt fa-fw"></i> Logout</a>
+</div>
+{% endblock %}
+
+{% block content %}
 <div class="row mt-4" id="profile">
     <div class="col card">
     <div id="edit" class="btn btn-primary edit"><i class="fas fa-fw fa-edit"></i><i class="fas fa-fw fa-times"></i></div>

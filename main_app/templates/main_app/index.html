@@ -7,18 +7,16 @@
 <link rel="stylesheet" href="{% static 'main_app/css/index.css' %}">
 {% endblock %}
 
-{% block content %}
-<div class="row head justify-content-between pt-3">
-    <h1 class="col-6 display-3">Match Maker</h1>
-    <nav class="col-4 align-items-center justify-content-end row">
-        <div class="col-auto">
-            <a href="{% url 'main_app:profile' %}"><i class="fas fa-user fa-fw"></i> Profile</a>
-        </div>
-        <div class="col-auto">
-            <a href="{% url 'main_app:logout' %}?next={{ request.path }}"><i class="fas fa-sign-out-alt fa-fw"></i> Logout</a>
-        </div>
-    </nav>
+{% block nav %}
+<div class="col-auto">
+    <a href="{% url 'main_app:profile' %}"><i class="fas fa-user fa-fw"></i> Profile</a>
 </div>
+<div class="col-auto">
+    <a href="{% url 'main_app:logout' %}?next={{ request.path }}"><i class="fas fa-sign-out-alt fa-fw"></i> Logout</a>
+</div>
+{% endblock %}
+
+{% block content %}
 <div class="row filtering mt-3">
     <div class="col-12">
         <div class="row no-gutters">
@@ -32,12 +30,12 @@
     </div>
 </div>
 <div id="filters" class="row filter-options mt-3 hidden">
-    <div class="col-6 input-group">
+    <div class="col-md-6 input-group mb-md-0 mb-3">
         <div class="input-group-prepend"><span class="input-group-text">Age</span></div>
         <input id="min_age" type="number" min="18" class="form-control" placeholder="Minimum">
         <input id="max_age" type="number" min="18" class="form-control" placeholder="Maximum">
     </div>
-    <div class="col-4 input-group">
+    <div class="col-md-4 input-group mb-md-0 mb-3">
         <div class="input-group-prepend"><span class="input-group-text">Gender</span></div>
         <select id="gender" class="form-control">
             <option value="">Any</option>
@@ -45,32 +43,34 @@
             <option value="F">Female</option>
         </select>
     </div>
-    <div class="col-2">
+    <div class="col-md-2 col">
         <button class="btn btn-primary w-100" id="btn-filter">Filter</button>
     </div>
 </div>
 <div class="row mt-4" id="profiles">
 </div>
-<div class="modal" id="profile_modal" role="dialog">
-<div class="" id="modal-dialog">
-<div class="row mt-4" id="see_profile">
-    <div class="col card">
-		<div id ="cancel"><i class ="far far-cross btn btn-danger"> Cancel</i></div>
-        <h1 class="display-4 mb-4" id="user_profile">Your profile</h1>
-        <div class="row">
-            <div class="col-3"><div id="user_profile_picture" class="profile-picture"></div></div>
-            <div class="col-auto info">
-                <h4 id="see_user_name">Full Name</h4>
-				<span class="input-group" required="" id="id_name">
-				</span>
-                <div>Gender: <span id="see_user_gender">M</span></div>
-                <div>Date of birth: <span id="see_user_dob">1st Jan 2000</span></div>
-                <div>Hobbies: <span id="see_user_hobbies">Hobby 1, Hobby 2</span></div>
+<div id="profile_modal" role="dialog" style="display: none;">
+    <div class="container">
+        <div class="row align-items-center justify-content-center" id="see_profile">
+            <div class="col-8">
+                <div class="card">
+                    <div id ="cancel" class="btn btn-danger"><i class ="fas fa-times"></i></div>
+                    <h1 class="display-4 mb-4" id="user_profile">Your profile</h1>
+                    <div class="row">
+                        <div class="col-3">
+                            <div id="user_profile_picture" class="profile-picture"></div>
+                        </div>
+                        <div class="col-auto info">
+                            <h4 id="see_user_name">Full Name</h4>
+                            <div>Gender: <span id="see_user_gender">M</span></div>
+                            <div>Date of birth: <span id="see_user_dob">1st Jan 2000</span></div>
+                            <div>Hobbies: <span id="see_user_hobbies">Hobby 1, Hobby 2</span></div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
-	</div>
-</div>
 </div>
 
 <script src="{% static 'main_app/js/profiles.js' %}"></script>

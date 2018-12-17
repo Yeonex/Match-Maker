@@ -121,12 +121,17 @@ class ProfileCreationForm(forms.ModelForm):
         widget=forms.DateInput(attrs={"class":"form-control"}),
         help_text="YYYY-MM-DD"
     )
-    # hobbies = forms.ModelChoiceField(
-    #     label="Hobbies",
-    #     widget=forms.SelectMultiple(attrs={"class":"form-control"}),
-    #     queryset=Hobbies.objects.all()
-    # )
-    field_order = ['name', 'profile_pic', 'gender', 'date_of_birth', 'hobbies']
+    hobbies = forms.ModelMultipleChoiceField(
+        label="Hobbies",
+        widget=forms.SelectMultiple(attrs={"class":"form-control"}),
+        queryset=Hobbies.objects.all()
+    )
+    bio = forms.CharField(
+        label="Bio",
+        widget=forms.Textarea(attrs={"class":"form-control"}),
+        max_length=500
+    )
+    field_order = ['name', 'profile_pic', 'gender', 'date_of_birth', 'hobbies', 'bio']
 
     def save(self, commit=True):
         profile = super().save(commit=False)
@@ -134,6 +139,7 @@ class ProfileCreationForm(forms.ModelForm):
         user.first_name = self.cleaned_data['name']['first_name']
         user.last_name = self.cleaned_data['name']['last_name']
         profile.hobbies.set(self.cleaned_data['hobbies'])
+        profile.bio = self.cleaned_data['bio']
         if commit:
             profile.save()
             user.save()

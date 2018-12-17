@@ -104,6 +104,7 @@ function getSimilarity(a, b){
 }
 
 $(document).ready(function(){
+    window.filtered = undefined;
 	$("#profile_modal").css("opacity:0");
 	$("#profile_modal").hide();
     //Load profiles here
@@ -125,12 +126,15 @@ $(document).ready(function(){
                 $('#profiles').append(getProfileCard(d[i].id,d[i].profile_pic, d[i].name, age, d[i].gender, d[i].hobbies, d[i].liked));
             }
 			$("#search").on("keyup", function(){
-				var search_res = $(this).val().toLowerCase();
-				for(let i = 0; i < d.length; i++){
-					if(d[i].name.toLowerCase().includes(search_res)){
-						$('#profile'+d[i].id).show();
+                var search_res = $(this).val().toLowerCase();
+                if(filtered)
+                    toCheck = filtered;
+                else toCheck = d;
+				for(let i = 0; i < toCheck.length; i++){
+					if(toCheck[i].name.toLowerCase().includes(search_res)){
+						$('#profile'+toCheck[i].id).show();
 					}else{
-						$('#profile'+d[i].id).hide();
+						$('#profile'+toCheck[i].id).hide();
 					}
 				}
 			});
@@ -147,9 +151,13 @@ $(document).ready(function(){
 			url:"/users/?min_age="+min+"&max_age="+max+"&gender="+gender,
 			type:"GET",
 			success: function(data){
-				let d = data.others;
-				$("#profiles").children().hide();
+                window.filtered = data.others;
+                d = filtered;
+                $("#profiles").children().hide();
+                search = $('#search').val().toLowerCase();
 				for(let i =0; i < d.length; i++){
+                    d[i].name=d[i].first_name + ' ' + d[i].last_name;
+                    if(d[i].name.toLowerCase().includes(search))
 					$("#profile"+d[i].id).show();
 				}
 			}

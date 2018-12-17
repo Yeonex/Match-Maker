@@ -70,10 +70,23 @@
 	position:absolute;
 	right: 1em;
 }
-#modal-dialog{
-	position:relative;
-	top:25%;
-	width:75em;
-	height:30em;
-	left:15em;
+#profile_modal{
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 1;
+}
+
+#profile_modal > .container{
+    height: 100%;
+}
+
+#profile_modal > .container > .row{
+    height: 100%;
+}
+
+#profile_modal .profile-picture{
+    padding-bottom: 66.6666666666%;
 }
