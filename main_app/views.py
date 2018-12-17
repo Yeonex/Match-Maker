@@ -6,13 +6,15 @@ from django.contrib.auth import login, authenticate
 from .forms import SignupForm, ProfileCreationForm
 from users.models import Profile
 
+#If profile hasn't been created, redirect to profile page
 @login_required
 @require_http_methods(["GET"])
 def index(request):
     if(request.user.first_name):
         return render(request, 'main_app/index.html')
-    return redirect('main:profile')
+    return redirect('main_app:profile')
 
+#Returns profile page or create profile page, or 'creates' the profile
 @login_required
 @require_http_methods(["GET", "POST"])
 def profile(request):
@@ -27,6 +29,7 @@ def profile(request):
         return render(request, 'main_app/profile.html', {'user':request.user,'profile':profile})
     return render(request, "main_app/create_profile.html", {"form":ProfileCreationForm(instance=profile)})
 
+#Returns the sign up form or signs the user up with the provided info
 @require_http_methods(["GET", "POST"])
 def sign_up(request):
     if request.user.is_authenticated:
