@@ -11,10 +11,12 @@ function getHobbies(hobbies){
     if(hobbies.length > 2)
         return $("<small>")
             .addClass('w-100')
-            .html(hobbies.slice(0,2).join(", ") + " and more");
+            .html(hobbies.slice(0,2).join(", ") + " and more")
+            .css('min-height','3em');
     return $("<small>")
         .addClass('w-100')
-        .html(hobbies.join(", "));
+        .html(hobbies.join(", "))
+        .css('min-height', '3em');
 }
 
 //Gets the profile card to be appended to the profiles
