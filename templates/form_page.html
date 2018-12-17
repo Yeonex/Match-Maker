@@ -14,6 +14,7 @@
 	crossorigin="anonymous"></script>
         <script>
             var csrf ='{{csrf_token}}';
+            //Include csrf with any ajax requests
             $.ajaxSetup({
                 beforeSend: (xhr, settings)=>{
                     if (!(/^http:.*/.test(settings.url) || /^https:.*/.test(settings.url))) {

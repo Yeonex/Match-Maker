@@ -1,3 +1,4 @@
+//Converts gender value to readable string
 function getGender(g){
 	if(g === "M"){
 		return "Male";
@@ -6,6 +7,7 @@ function getGender(g){
 	}
 }
 
+//Updates the profile card with the user's information
 function getProfileCard(picture, name, age, gender, bio, hobbies){
 	$("#name").text(name);
 	$("#gender").text(getGender(gender));
@@ -18,6 +20,7 @@ function getProfileCard(picture, name, age, gender, bio, hobbies){
 	$("#bio").text(bio);
 }
 
+//Toggles the edit form on and off
 function toggleEditForm(){
 	$("#info").toggle();
 	$("#edit-form").toggle();
@@ -39,6 +42,7 @@ function toggleEditForm(){
 }
 
 $(document).ready(function(){
+	//Gets the information about the current user and updates card
 	$.ajax({
 		url:"/users/current/",
 		type:"GET",
@@ -47,6 +51,7 @@ $(document).ready(function(){
 			$('#info').append(getProfileCard(data.profile_pic, data.first_name + " " + data.last_name , data.date_of_birth, data.gender, data.bio, data.hobbies));
 		}
 	});
+	//Gets the list of hobbies for the edit profile form
 	$.ajax({
 		url:"/users/hobbies/",
 		type:"GET",
@@ -58,10 +63,12 @@ $(document).ready(function(){
 		}
 	});
 	
+	//When then edit button is clicked, toggle the form
 	$("#edit").click(function(){
 		toggleEditForm();
 	});
 	
+	//When the save button is clicked, PUT changes to server, update local text
 	$("#save").click(function(){
 		let n = $("#first-edit").first().val();
 		let l = $("#last-edit").first().val();

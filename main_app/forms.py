@@ -3,6 +3,7 @@ from django.contrib.auth import password_validation
 from django import forms
 from users.models import Profile, Hobbies, GENDER_TYPE
 
+#Create a new MultiWidget extension for the name (first_name + last_name)
 class NameInput(forms.MultiWidget):
     def __init__(self, attrs=None, first_attrs=None, last_attrs=None):
         widgets = (
@@ -15,12 +16,15 @@ class NameInput(forms.MultiWidget):
         )
         super().__init__(widgets, attrs=attrs)
 
+    #Use custom template
     template_name = 'main_app/forms/widgets/name.html'
+
     def decompress(self, name):
         if name:
             return [name['first_name'], name['last_name']]
         return ['', '']
 
+    #Overriding get_context to allow for subwidgets to have attributes
     def get_context(self, name, value, attrs):
         context = super().get_context(name, value, attrs)
 
@@ -43,6 +47,7 @@ class NameInput(forms.MultiWidget):
         context['widget']['subwidgets'] = subwidgets
         return context
 
+#New MultiValueField for the name
 class NameField(forms.MultiValueField):
     def __init__(self, **kwargs):
         super().__init__([
@@ -53,13 +58,16 @@ class NameField(forms.MultiValueField):
         print(data_list)
         return {'first_name':data_list[0], 'last_name':data_list[1]}
 
+#Extension of file input with custom template so it works nicely with bootstrap
 class BootstrapFileInput(forms.FileInput):
     template_name='main_app/forms/widgets/bootstrap-file.html'
 
+#Custom fields for login form
 class LoginForm(AuthenticationForm):
     username = forms.CharField(max_length = 254, widget = forms.TextInput(attrs = {'class':'form-control', "autofocus":"true"}))
     password = forms.CharField(label = "Password", widget = forms.PasswordInput(attrs = {'class':'form-control'}))
 
+#Custom sign up form to include email
 class SignupForm(UserCreationForm):
     username = forms.CharField(
         label="Username",
@@ -90,6 +98,7 @@ class SignupForm(UserCreationForm):
             user.save()
         return user
 
+#Profile creation form, allows for creation as well as updating of profile info
 class ProfileCreationForm(forms.ModelForm):
     class Meta:
         model = Profile
@@ -106,7 +115,8 @@ class ProfileCreationForm(forms.ModelForm):
     profile_pic = forms.ImageField(
         label="Profile picture",
         widget=BootstrapFileInput(attrs={"class":"form-control"}),
-        required=False
+        required=False,
+        help_text="This is your only chance, it cannot be changed later"
     )
     gender = forms.ChoiceField(
         label="Gender",

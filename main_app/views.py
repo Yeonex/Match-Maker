@@ -23,8 +23,8 @@ def profile(request):
             form.save()
             return redirect('main_app:index')
         return render(request, 'main_app/create_profile.html', {"form":form})
-    if request.user.first_name:
-        return render(request, 'main_app/profile.html', {'user':request.user,'profile':profile})
+    # if request.user.first_name:
+    #     return render(request, 'main_app/profile.html', {'user':request.user,'profile':profile})
     return render(request, "main_app/create_profile.html", {"form":ProfileCreationForm(instance=profile)})
 
 @require_http_methods(["GET", "POST"])
