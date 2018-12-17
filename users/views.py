@@ -73,9 +73,9 @@ def index(request):
 def user_info(request, user_id):
     #get request for user
     user = get_object_or_404(User, pk=user_id)
-    hobbies = []
+    hobbies = {}
     for hobby in user.profile.hobbies.all():
-        hobbies.append(str(hobby))
+        hobbies[hobby.id] = str(hobby)
     json = {
         "first_name" : user.first_name,
         "last_name" : user.last_name,
@@ -101,6 +101,8 @@ def current_user_info(request):
 
 def get_liked_users(request):
     #Gets all users liked by this account
+    current_user = request.user
+
     return HttpResponse("Liked users returned")
 
 
