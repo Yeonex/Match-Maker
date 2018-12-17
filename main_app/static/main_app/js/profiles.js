@@ -19,6 +19,31 @@ function getProfileCard(id, imageUrl, name, age, gender, hobbies, liked){
             $("<strong>")
             .addClass('w-100')
             .html(name)
+			.css("cursor","pointer")
+				.click((e) => {
+		$.ajax({
+			url:"/users/"+id+"/",
+			type:"GET",
+			success:function(data){
+				if(data.gender === "M"){
+					var g = "Male";
+				}else{
+					var g = "Female";
+				}
+				$("#user_profile").text(data.first_name + "'s Profile");
+				$("#see_user_name").text(data.first_name + " " + data.last_name);
+				$("#see_user_gender").text(g);
+				$("#see_user_dob").text(data.date_of_birth);
+				$("#see_user_hobbies").text(data.hobbies.join(", "));
+				if(data.profile_pic){
+					$("#user_profile_picture").css("background-image","url("+data.profile_pic+")")
+				}
+				console.log(data);
+				$("#profile_modal").css("backgroundColor","rgba(0,0,0,0.3)");
+				$("#profile_modal").show();
+			}
+		})
+		})
         )
         .append(
             $("<small>")
@@ -79,6 +104,8 @@ function getSimilarity(a, b){
 }
 
 $(document).ready(function(){
+	$("#profile_modal").css("opacity:0");
+	$("#profile_modal").hide();
     //Load profiles here
     $.ajax({
         url:"/users/",
@@ -115,6 +142,7 @@ $(document).ready(function(){
 		let min = $("#min_age").val();
 		let max = $("#max_age").val();
 		let gender = $("#gender").val();
+		console.log(gender);
 		$.ajax({
 			url:"/users/?min_age="+min+"&max_age="+max+"&gender="+gender,
 			type:"GET",
@@ -126,5 +154,9 @@ $(document).ready(function(){
 				}
 			}
 		});
+	});
+	
+	$("#cancel").click(function(){
+		$("#profile_modal").hide();
 	});
 });

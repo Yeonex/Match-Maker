@@ -65,3 +65,15 @@
     transform: scale(0.8);
     transition: none;
 }
+
+#cancel{
+	position:absolute;
+	right: 1em;
+}
+#modal-dialog{
+	position:relative;
+	top:25%;
+	width:75em;
+	height:30em;
+	left:15em;
+}

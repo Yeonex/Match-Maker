@@ -9,7 +9,7 @@
 
 {% block content %}
 <div class="row head justify-content-between pt-3">
-    <h1 class="col-6 display-3">Matching site</h1>
+    <h1 class="col-6 display-3">Match Maker</h1>
     <nav class="col-4 align-items-center justify-content-end row">
         <div class="col-auto">
             <a href="{% url 'main_app:profile' %}"><i class="fas fa-user fa-fw"></i> Profile</a>
@@ -39,10 +39,10 @@
     </div>
     <div class="col-4 input-group">
         <div class="input-group-prepend"><span class="input-group-text">Gender</span></div>
-        <select class="form-control">
-            <option>Any</option>
-            <option>Male</option>
-            <option>Female</option>
+        <select id="gender" class="form-control">
+            <option value="">Any</option>
+            <option value="M">Male</option>
+            <option value="F">Female</option>
         </select>
     </div>
     <div class="col-2">
@@ -51,5 +51,27 @@
 </div>
 <div class="row mt-4" id="profiles">
 </div>
+<div class="modal" id="profile_modal" role="dialog">
+<div class="" id="modal-dialog">
+<div class="row mt-4" id="see_profile">
+    <div class="col card">
+		<div id ="cancel"><i class ="far far-cross btn btn-danger"> Cancel</i></div>
+        <h1 class="display-4 mb-4" id="user_profile">Your profile</h1>
+        <div class="row">
+            <div class="col-3"><div id="user_profile_picture" class="profile-picture"></div></div>
+            <div class="col-auto info">
+                <h4 id="see_user_name">Full Name</h4>
+				<span class="input-group" required="" id="id_name">
+				</span>
+                <div>Gender: <span id="see_user_gender">M</span></div>
+                <div>Date of birth: <span id="see_user_dob">1st Jan 2000</span></div>
+                <div>Hobbies: <span id="see_user_hobbies">Hobby 1, Hobby 2</span></div>
+            </div>
+        </div>
+    </div>
+	</div>
+</div>
+</div>
+
 <script src="{% static 'main_app/js/profiles.js' %}"></script>
 {% endblock %}
