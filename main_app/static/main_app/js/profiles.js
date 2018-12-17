@@ -20,7 +20,7 @@ function getProfileCard(id, imageUrl, name, age, gender, hobbies, liked){
             .addClass('w-100')
             .html(name)
 			.css("cursor","pointer")
-				.click((e) => {
+				.click(function(e){
 		$.ajax({
 			url:"/users/"+id+"/",
 			type:"GET",
@@ -72,7 +72,7 @@ function getProfileCard(id, imageUrl, name, age, gender, hobbies, liked){
                     .attr('type', 'checkbox')
                     .attr('id', id)
                     .prop('checked', liked)
-                    .click((e) => {
+                    .click(function(e){
                         if(e.target !== e.currentTarget)
                             return;
                         $.ajax({
@@ -121,7 +121,7 @@ $(document).ready(function(){
             console.log(data);
             current_user = data.current_user;
             d = data.others;
-            d.sort((a,b)=>{
+            d.sort(function(a,b){
                 return getSimilarity(b, current_user) - getSimilarity(a, current_user);
             });
             for(let i = 0; i < d.length; i++){

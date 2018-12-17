@@ -28,8 +28,12 @@
     </head>
     <body>
         <div class="container content">
-            {% block content %}
-            {% endblock %}
+            <div class="login row align-items-center justify-content-center">
+                <div class="col col-md-10 col-lg-6">
+                    {% block content %}
+                    {% endblock %}
+                </div>
+            </div>
         </div>
     </body>
 </html>

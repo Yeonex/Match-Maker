@@ -125,7 +125,7 @@ class ProfileCreationForm(forms.ModelForm):
     )
     bio = forms.CharField(
         label="Bio",
-        widget=forms.Textarea(attrs={"class":"form-control"}),
+        widget=forms.Textarea(attrs={"class":"form-control", "rows":2}),
         max_length=500
     )
     field_order = ['name', 'profile_pic', 'gender', 'date_of_birth', 'hobbies', 'bio']

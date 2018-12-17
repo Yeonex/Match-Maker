@@ -15,13 +15,24 @@
         <script>
             var csrf ='{{csrf_token}}';
             $.ajaxSetup({
-                beforeSend: (xhr, settings)=>{
+                beforeSend: function(xhr, settings){
                     if (!(/^http:.*/.test(settings.url) || /^https:.*/.test(settings.url))) {
                         // Only send the token to relative URLs i.e. locally.
                         xhr.setRequestHeader("X-CSRFToken", csrf);
                     }
                 }
             });
+            if (!Array.prototype.includes) {
+                Object.defineProperty(Array.prototype, "includes", {
+                    enumerable: false,
+                    value: function(obj) {
+                        var newArr = this.filter(function(el) {
+                            return el == obj;
+                        });
+                        return newArr.length > 0;
+                    }
+                });
+            }
         </script>
         {% block head %}
         {% endblock %}

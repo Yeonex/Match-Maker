@@ -10,17 +10,13 @@
 {% endblock %}
 
 {% block content %}
-<div class="login row align-items-center justify-content-center">
-    <div class="col col-md-6">
-        <form enctype="multipart/form-data" method="post" class="card">
-            <h2 class="display-4 mb-4">Create profile</h2>
-            {% csrf_token %}
-            {{ form.as_p }}
-            <div class="form-group text-right mb-0">
-                <button type="submit" class="btn btn-primary">Create</button>
-            </div>
-        </form>
-    </div>
-</div>
+    <form enctype="multipart/form-data" method="post" class="card">
+        <h2 class="display-4 mb-4">Create profile</h2>
+        {% csrf_token %}
+        {{ form.as_p }}
+        <div class="form-group text-right mb-0">
+            <button type="submit" class="btn btn-primary">Create</button>
+        </div>
+    </form>
 <script src="{% static 'main_app/js/create_profile.js' %}"></script>
 {% endblock %}

@@ -6,13 +6,15 @@ function getGender(g){
 	}
 }
 
-function getProfileCard(picture, name, age, gender,bio, hobbies){
+function getProfileCard(picture, name, age, gender, bio, hobbies){
 	$("#name").text(name);
 	$("#gender").text(getGender(gender));
 	$("#dob").text(age);
-	$("#hobbies").text(hobbies.map((hobby)=>{return hobby.name}).join(", "));
+	$("#hobbies").text(hobbies.map(function(hobby){return hobby.name}).join(", "));
 	if(picture)
 		$("#profile-picture").css("background-image","url("+picture+")");
+	if(bio === null)
+		bio = "No bio added.";
 	$("#bio").text(bio);
 }
 
@@ -85,5 +87,3 @@ $(document).ready(function(){
 	});
 	
 });
-
-
