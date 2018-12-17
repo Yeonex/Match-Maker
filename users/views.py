@@ -45,7 +45,7 @@ def index(request):
                 max_age = 10000
         else:
             max_age = 10000
-        if request.GET['gender'] == "M" or request.GET['gender'] == "F":
+        if 'gender' in request.GET and (request.GET['gender'] == "M" or request.GET['gender'] == "F"):
             gender = request.GET['gender'].capitalize()
         else:
             gender = None
