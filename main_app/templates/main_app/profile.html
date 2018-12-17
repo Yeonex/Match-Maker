@@ -21,14 +21,27 @@
 </div>
 <div class="row mt-4" id="profile">
     <div class="col card">
+	<div id="edit"><i class="far fa-edit btn btn-info"></i></div>
+	<div id ="cancel"><i class ="far far-cross btn btn-danger"> Cancel</i></div>
         <h1 class="display-4 mb-4">Your profile</h1>
         <div class="row">
             <div class="col-3"><div id="profile-picture" class="profile-picture"></div></div>
             <div class="col-auto info">
                 <h4 id="name">Full Name</h4>
+				<span class="inpu-group" required="" id="id_name">
+				<input type="text" name="name_0" class="form-control" placeholder="" id="first-edit"></input>
+				<input type="text" name="name_1" class="form-control" placeholder="" id="last-edit"></input>
+				</span>
                 <div>Gender: <span id="gender">M</span></div>
+				<select name="gender-edit" class="form-control" id="gender-edit-info">
+				<option value="M" selected="">Male</option>
+				<option value="F">Female</option>
+				</select>
                 <div>Date of birth: <span id="dob">1st Jan 2000</span></div>
+				<input type="text" placeholder="" id="dob-edit"></input>
                 <div>Hobbies: <span id="hobbies">Hobby 1, Hobby 2</span></div>
+				<div><p><label for="hobbies"></label><select id="list_hobbies" multiple=""></select></p></div>
+				<div id="save"><i class="far fa-save btn btn-info"> Save</i></div>
             </div>
         </div>
     </div>

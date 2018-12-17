@@ -94,12 +94,13 @@ $(document).ready(function(){
                 var ageDifMs = Date.now() - new Date(d[i].date_of_birth);
                 var ageDate = new Date(ageDifMs);
                 var age = Math.abs(ageDate.getUTCFullYear() - 1970);
-                $('#profiles').append(getProfileCard(d[i].id,d[i].profile_pic, d[i].first_name, age, d[i].gender, d[i].hobbies, d[i].liked));
+				d[i].name = d[i].first_name + " " + d[i].last_name;
+                $('#profiles').append(getProfileCard(d[i].id,d[i].profile_pic, d[i].name, age, d[i].gender, d[i].hobbies, d[i].liked));
             }
 			$("#search").on("keyup", function(){
 				var search_res = $(this).val().toLowerCase();
 				for(let i = 0; i < d.length; i++){
-					if(d[i].first_name.toLowerCase().includes(search_res)){
+					if(d[i].name.toLowerCase().includes(search_res)){
 						$('#profile'+d[i].id).show();
 					}else{
 						$('#profile'+d[i].id).hide();
