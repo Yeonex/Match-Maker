@@ -8,13 +8,17 @@ function getGender(g){
 }
 
 //Updates the profile card with the user's information
-function getProfileCard(picture, name, age, gender, bio, hobbies){
+function setProfileCard(picture, name, age, gender, likes, bio, hobbies){
 	$("#name").text(name);
 	$("#gender").text(getGender(gender));
 	$("#dob").text(age);
 	$("#hobbies").text(hobbies.map(function(hobby){return hobby.name}).join(", "));
 	if(picture)
 		$("#profile-picture").css("background-image","url("+picture+")");
+	if(likes.length > 0)
+		$("#likes").text(likes.map(function(like){return like.first_name + ' ' + like.last_name}).join(", "));
+	else
+		$("#likes").text("No likes :(");
 	if(bio === null)
 		bio = "No bio added.";
 	$("#bio").text(bio);
@@ -48,7 +52,7 @@ $(document).ready(function(){
 		type:"GET",
 		success:function(data){
 			window.user = data;
-			$('#info').append(getProfileCard(data.profile_pic, data.first_name + " " + data.last_name , data.date_of_birth, data.gender, data.bio, data.hobbies));
+			$('#info').append(setProfileCard(data.profile_pic, data.first_name + " " + data.last_name , data.date_of_birth, data.gender, data.likes, data.bio, data.hobbies));
 		}
 	});
 	//Gets the list of hobbies for the edit profile form
@@ -88,7 +92,7 @@ $(document).ready(function(){
 			success:function(data){
 				toggleEditForm();
 				user = data.user;
-				getProfileCard(user.profile_pic, user.first_name + ' ' + user.last_name, user.date_of_birth, user.gender, user.bio, user.hobbies);
+				setProfileCard(user.profile_pic, user.first_name + ' ' + user.last_name, user.date_of_birth, user.gender, user.likes, user.bio, user.hobbies);
 			}
 		});
 	});

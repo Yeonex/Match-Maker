@@ -23,7 +23,6 @@ class Profile(models.Model):
     bio = models.TextField(null=True)
     date_of_birth = models.DateField(null=True)
     hobbies = models.ManyToManyField('Hobbies')
-    profile_requests = models.ManyToManyField('self')
     profile_connections = models.ManyToManyField('self')
 
 # Creates an instance of profile whenever a user object is created

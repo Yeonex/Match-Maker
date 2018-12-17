@@ -32,10 +32,11 @@
                 </div>
                 <div class="col-sm-9 col-12 info" id="info">
                     <div><h4 id="name">{{ user.first_name }} {{ user.last_name }}</h4></div>
-                    <div>Gender: <span id="gender"></span></div>
-                    <div>Date of birth: <span id="dob"></span></div>
-                    <div>Hobbies: <span id="hobbies"></span></div>
-    				<div>Bio:<p id="bio">{{ profile.bio }}</p>
+                    <div><strong>Gender:</strong> <span id="gender"></span></div>
+                    <div><strong>Date of birth:</strong> <span id="dob"></span></div>
+                    <div><strong>Hobbies:</strong> <span id="hobbies"></span></div>
+                    <div><strong>Liked by:</strong> <span id="likes"></span></div>
+    				<div><strong>Bio:</strong><p id="bio">{{ profile.bio }}</p>
     				</div>
                 </div>
                 <div class="col-sm-9 col-12 edit-form" id="edit-form" style="display: none">

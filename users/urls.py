@@ -7,6 +7,6 @@ urlpatterns = [
     path('', views.index, name='index'),
     path('current/', views.current_user_info, name='current_user_info'),
     path('<int:user_id>/', views.user_info, name='user_info'),
-    path('like/<int:user_id>/', views.liked_user, name='liked_user'), #liked_user
+    path('like/<int:user_id>/', views.like_user, name='liked_user'), #liked_user
     path('hobbies/', views.hobbies, name='hobbies')
 ]

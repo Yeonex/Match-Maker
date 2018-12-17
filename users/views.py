@@ -9,7 +9,7 @@ from datetime import date
 from main_app.forms import ProfileCreationForm
 
 #Return a dict representing the passed user, relative to the current user
-def getUserDict(request, user, hobbyIDs=False):
+def getUserDict(request, user, detailed=False):
     current_user = request.user
     hobbies = []
     liked = False
@@ -17,11 +17,11 @@ def getUserDict(request, user, hobbyIDs=False):
         liked = True
     hobbies = []
     for hobby in user.profile.hobbies.all():
-        if hobbyIDs:
+        if detailed:
             hobbies.append({"value" : hobby.id, "name" : str(hobby)})
         else:
             hobbies.append(str(hobby))
-    return {
+    d = {
         "id" : user.id,
         "first_name" : user.first_name,
         "last_name" : user.last_name,
@@ -33,6 +33,13 @@ def getUserDict(request, user, hobbyIDs=False):
         "hobbies" : hobbies,
         "liked" : liked
     }
+    if detailed:
+        d["likes"] = []
+        for profile in user.profile.profile_connections.all():
+            if profile.user.id == current_user.id:
+                continue
+            d["likes"].append(getUserDict(request, profile.user))
+    return d
 
 #The index simply returns the current user and a list of other users with profiles
 @require_http_methods(["GET"])
@@ -97,7 +104,7 @@ def current_user_info(request):
 
 #Toggles the liked status of the given user from the current user
 @require_http_methods(["PUT"])
-def liked_user(request, user_id):
+def like_user(request, user_id):
     #Like user
     current_user = request.user
     user_to_like = get_object_or_404(User, pk=user_id)
