@@ -11,7 +11,15 @@
 	position:absolute;
 	right: 1em;
 }
-#cancel{
-	position:absolute;
-	right: 1em;
+
+#edit > i{
+    transition: all 0.2s;
+}
+
+.edit > i.fa-times{
+    font-size: 0em;
+}
+
+.cancel > i.fa-edit{
+    font-size: 0em;
 }

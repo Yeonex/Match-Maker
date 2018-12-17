@@ -1,97 +1,82 @@
-function getProfileCard(picture, name, age, gender, hobbies){
-	if(gender === "M"){
-		gender = "Male";
+function getGender(g){
+	if(g === "M"){
+		return "Male";
 	} else {
-		gender = "Female"
+		return "Female";
 	}
+}
+
+function getProfileCard(picture, name, age, gender, hobbies){
 	$("#name").text(name);
-	$("#gender").text(gender);
+	$("#gender").text(getGender(gender));
 	$("#dob").text(age);
-	$("#hobbies").text(hobbies.join(", "));
+	$("#hobbies").text(hobbies.map((hobby)=>{return hobby.name}).join(", "));
 	if(picture)
 		$("#profile-picture").css("background-image","url("+picture+")");
 }
 
+function toggleEditForm(){
+	$("#info").toggle();
+	$("#edit-form").toggle();
+	if($('#edit').hasClass('edit')){
+		//Edit
+		$('#edit').removeClass('edit').addClass('cancel').removeClass('btn-primary').addClass('btn-danger');
+		$('#first-edit').val(user.first_name);
+		$('#last-edit').val(user.last_name);
+		$('#gender-edit-info').val(user.gender);
+		$('#dob-edit').val(user.date_of_birth);
+		for(let i = 0; i < user.hobbies.length; i++){
+			$('#hobby'+user.hobbies[i].value).prop('selected', true);
+		}
+	}else{
+		//Cancel
+		$('#edit').removeClass('cancel').addClass('edit').addClass('btn-primary').removeClass('btn-danger');
+	}
+}
+
 $(document).ready(function(){
-	$("#first-edit").hide();
-	$("#last-edit").hide();
-	$("#dob-edit").hide();
-	$("#gender-edit").hide();
-	$("#gender-edit-info").hide();
-	$("#save").hide();
-	$("#cancel").hide();
-	$("#list_hobbies").hide();
-	
 	$.ajax({
-		url:"/users",
+		url:"/users/current/",
 		type:"GET",
 		success:function(data){
-			window.d = data.current_user;
-			var age = data.current_user.date_of_birth;
-			$('#info').append(getProfileCard(d.profile_pic, d.first_name + " " + d.last_name , age, d.gender, d.hobbies));
+			window.user = data;
+			$('#info').append(getProfileCard(data.profile_pic, data.first_name + " " + data.last_name , data.date_of_birth, data.gender, data.hobbies));
 		}
 	});
 	$.ajax({
 		url:"/users/hobbies/",
 		type:"GET",
 		success:function(data){
-			console.log(data);
+			window.hobbies = data;
 			for(var i = 0; i < data.length;i++){
-				$("#list_hobbies").append("<option value="+data[i].value+">"+data[i].name+"</option>");
+				$("#list-hobbies").append('<option value="' + data[i].value + '" id="hobby' + data[i].value + '">' + data[i].name + "</option>");
 			}
 		}
 	});
 	
-	$("#edit").click(function(data){
-		console.log($("#dob").text());
-		$("#edit").hide();
-		$("#name").hide();
-		$("#first-edit").show();
-		$("#first-edit").attr("value",d.first_name);
-		$("#last-edit").show();
-		$("#last-edit").attr("value",d.last_name);
-		$("#dob").hide();
-		$("#dob-edit").show();
-		$("#dob-edit").attr("value",$("#dob").text());
-		$("#gender").hide();
-		$("#gender-edit").show();
-		$("#gender-edit-info").show();
-		$("#save").show();
-		$("#cancel").show();
-		$("#list_hobbies").show();
-		
-	});
-	
-	$("#cancel").click(function(){
-		$("#edit").show();
-		$("#name").show();
-		$("#dob").show();
-		$("#gender").show();
-		$("#first-edit").hide();
-		$("#last-edit").hide();
-		$("#save").hide();
-		$("#cancel").hide();
-		$("#gender-edit").hide();
-		$("#gender-edit-info").hide();
-		$("#dob-edit").hide();
-		$("#list_hobbies").hide();
+	$("#edit").click(function(){
+		toggleEditForm();
 	});
 	
 	$("#save").click(function(){
-		var n = $("#name-edit").first().val();
-		var l = $("name-edit").first().val();
-		var g = $("#gender-edit-info").val();
-		var d = $("#dob-edit").first().val();
-		var h = $("#list_hobbies").val();
-		console.log(g);
+		let n = $("#first-edit").first().val();
+		let l = $("#last-edit").first().val();
+		let g = $("#gender-edit-info").val();
+		let d = $("#dob-edit").first().val();
+		let h = $("#list-hobbies").val();
+		let data = $.param({name_0:n,name_1:l,gender:g,date_of_birth:d});
+		for(let i = 0; i < h.length; i++){
+			data += "&hobbies="+h[i];
+		}
 		$.ajax({
-			url:"/profile/",
-			put:"PUT",
-			data: {name: n, last: l, gender: g, dob: d, hobbies: h},
-			success:function(response){
+			url:"/users/current/",
+			type:"PUT",
+			data: data,
+			success:function(data){
+				toggleEditForm();
+				user = data.user;
+				getProfileCard(user.profile_pic, user.first_name + ' ' + user.last_name, user.date_of_birth, user.gender, user.hobbies);
 			}
-			
-			
 		});
 	});
 	

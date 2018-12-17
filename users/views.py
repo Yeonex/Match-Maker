@@ -1,13 +1,14 @@
 from django.shortcuts import render, get_object_or_404
-from django.http import HttpResponse, JsonResponse
+from django.http import HttpResponse, JsonResponse, QueryDict
 from .models import Profile, Hobbies
 from django.contrib.auth.models import User
 from django.views.decorators.http import require_http_methods
 from django.contrib.auth.decorators import login_required
 from django.core.mail import send_mail, EmailMessage
 from datetime import date
+from main_app.forms import ProfileCreationForm
 
-def getUserDict(request, user):
+def getUserDict(request, user, hobbyIDs=False):
     current_user = request.user
     hobbies = []
     liked = False
@@ -15,7 +16,10 @@ def getUserDict(request, user):
         liked = True
     hobbies = []
     for hobby in user.profile.hobbies.all():
-        hobbies.append({"value" : hobby.id, "name" : str(hobby)})
+        if hobbyIDs:
+            hobbies.append({"value" : hobby.id, "name" : str(hobby)})
+        else:
+            hobbies.append(str(hobby))
     return {
         "id" : user.id,
         "first_name" : user.first_name,
@@ -55,7 +59,7 @@ def index(request):
         users = User.objects.all()
         for user in users:
             dob = user.profile.date_of_birth
-            age = date.today().year - dob.year
+            age = abs(date.today().year - dob.year)
             user_gender = user.profile.gender
             if user.id == current_user.id:
                 continue
@@ -76,7 +80,7 @@ def user_info(request, user_id):
     user = get_object_or_404(User, pk=user_id)
     hobbies = []
     for hobby in user.profile.hobbies.all():
-        hobbies.append({"value" : hobby.id, "name" : str(hobby)})
+        hobbies.append(str(hobby))
     json = {
         "first_name" : user.first_name,
         "last_name" : user.last_name,
@@ -92,20 +96,20 @@ def user_info(request, user_id):
 @require_http_methods(["GET", "PUT"])
 def current_user_info(request):
     if request.method == "PUT":
+        profile = Profile.objects.get(user=request.user)
         request.PUT = QueryDict(request.body)
         form = ProfileCreationForm(request.PUT, request.FILES, instance=profile)
         if form.is_valid():
             form.save()
-            return JsonResponse({"status":"success"})
+            return JsonResponse({"status":"success", "user":getUserDict(request, profile.user, True)})
         return JsonResponse(form.errors, safe=False, status=400)
-    return JsonResponse(getUserDict(request, request.user), safe=False)
+    return JsonResponse(getUserDict(request, request.user, True), safe=False)
 
 def get_liked_users(request):
     #Gets all users liked by this account
     current_user = request.user
 
     return HttpResponse("Liked users returned")
-
 
 @require_http_methods(["PUT"])
 def liked_user(request, user_id):
@@ -126,8 +130,6 @@ def liked_user(request, user_id):
         [user_to_like.profile.email])
         email.send()
     return HttpResponse("Success")
-
-
 
 @require_http_methods(["GET"])
 def hobbies(request):
