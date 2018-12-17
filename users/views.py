@@ -44,7 +44,7 @@ def index(request):
             except:
                 max_age = 200
         else:
-            max_age = 200
+            max_age = 10000
         if 'gender' in request.GET and request.GET['gender'] != "undefined":
             gender = request.GET['gender'].capitalize()
         else:
