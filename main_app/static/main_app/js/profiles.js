@@ -7,6 +7,16 @@ function getProfilePicture(imageUrl){
     .css('background-image', 'url(' + imageUrl + ')');
 }
 
+function getHobbies(hobbies){
+    if(hobbies.length > 2)
+        return $("<small>")
+            .addClass('w-100')
+            .html(hobbies.slice(0,2).join(", ") + " and more");
+    return $("<small>")
+        .addClass('w-100')
+        .html(hobbies.join(", "));
+}
+
 //Gets the profile card to be appended to the profiles
 function getProfileCard(id, imageUrl, name, age, gender, hobbies, liked){
     return $("<div>")
@@ -57,9 +67,7 @@ function getProfileCard(id, imageUrl, name, age, gender, hobbies, liked){
             .html(age + ' | ' + gender)
         )
         .append(
-            $("<small>")
-            .addClass('w-100')
-            .html(hobbies.join(", "))
+            getHobbies(hobbies)
         )
         .append(
             $("<div>")
