@@ -32,14 +32,20 @@ def index(request):
     #get and post in index for posting
     if request.method == "GET":
         if 'min_age' in request.GET:
-            min_age = int(request.GET['min_age'])
+            try:
+                min_age = int(request.GET['min_age'])
+            except:
+                min_age = 0
         else:
             min_age = 0
         if 'max_age' in request.GET:
-            max_age = int(request.GET['max_age'])
+            try:
+                max_age = int(request.GET['max_age'])
+            except:
+                max_age = 200
         else:
             max_age = 200
-        if 'gender' in request.GET:
+        if 'gender' in request.GET and request.GET['gender'] != "undefined":
             gender = request.GET['gender'].capitalize()
         else:
             gender = None
@@ -60,6 +66,7 @@ def index(request):
                     if gender == user_gender:
                         j = getUserDict(request, user)
                         json.append(j)
+            return JsonResponse(json, safe=False)
         return JsonResponse({"current_user":getUserDict(request, current_user),"others":json}, safe=False)
     return HttpResponse("POST todo")
 
