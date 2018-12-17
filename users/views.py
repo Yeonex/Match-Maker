@@ -28,6 +28,7 @@ def getUserDict(request, user, hobbyIDs=False):
         "profile_pic" : user.profile.profile_pic.url if user.profile.profile_pic else '',
         "gender" : user.profile.gender,
         "date_of_birth" : user.profile.date_of_birth,
+        "bio": user.profile.bio,
         "hobbies" : hobbies,
         "liked" : liked
     }
@@ -88,6 +89,7 @@ def user_info(request, user_id):
         "profile_pic" : user.profile.profile_pic.url,
         "gender" : user.profile.gender,
         "date_of_birth" : user.profile.date_of_birth,
+        "bio": user.profile.bio,
         "hobbies" : hobbies,
         "liked_count" : user.profile.profile_connections.count()
         }

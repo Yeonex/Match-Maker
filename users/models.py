@@ -24,6 +24,7 @@ class Profile(models.Model):
     profile_pic = models.ImageField(upload_to='profile_pics/', null=True)
     email = models.EmailField(null=True)
     gender = models.CharField(choices=GENDER_TYPE, max_length=1, null=True)
+    bio = models.TextField(null=True)
     date_of_birth = models.DateField(null=True)
     hobbies = models.ManyToManyField('Hobbies')
     profile_requests = models.ManyToManyField('self')
