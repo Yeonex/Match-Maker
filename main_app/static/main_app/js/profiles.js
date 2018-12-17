@@ -81,7 +81,7 @@ function getSimilarity(a, b){
 $(document).ready(function(){
     //Load profiles here
     $.ajax({
-        url:"/users",
+        url:"/users/",
         type:"GET",
         success:function(data){
             console.log(data);
@@ -109,4 +109,22 @@ $(document).ready(function(){
 			});
         }
     });
+	
+	$("#btn-filter").click(function(){
+		console.log($("#max_age").val());
+		let min = $("#min_age").val();
+		let max = $("#max_age").val();
+		let gender = $("#gender").val();
+		$.ajax({
+			url:"/users/?min_age="+min+"&max_age="+max+"&gender="+gender,
+			type:"GET",
+			success: function(data){
+				let d = data.others;
+				$("#profiles").children().hide();
+				for(let i =0; i < d.length; i++){
+					$("#profile"+d[i].id).show();
+				}
+			}
+		});
+	});
 });
