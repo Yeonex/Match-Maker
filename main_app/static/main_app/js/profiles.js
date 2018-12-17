@@ -34,7 +34,13 @@ function getProfileCard(id, imageUrl, name, age, gender, hobbies, liked){
 				$("#see_user_name").text(data.first_name + " " + data.last_name);
 				$("#see_user_gender").text(g);
 				$("#see_user_dob").text(data.date_of_birth);
-				$("#see_user_hobbies").text(data.hobbies.join(", "));
+                $("#see_user_hobbies").text(data.hobbies.join(", "));
+                if(data.bio == null){
+                    bio = "No bio added.";
+                }else{
+                    bio = data.bio;
+                }
+                $("#see_user_bio").text(bio);
 				if(data.profile_pic){
 					$("#user_profile_picture").css("background-image","url("+data.profile_pic+")")
 				}

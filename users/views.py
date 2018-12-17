@@ -59,19 +59,20 @@ def index(request):
         current_user = request.user
         users = User.objects.all()
         for user in users:
-            dob = user.profile.date_of_birth
-            age = abs(date.today().year - dob.year)
-            user_gender = user.profile.gender
             if user.id == current_user.id:
                 continue
-            if min_age <= age <= max_age:
-                if gender is None:
-                    j = getUserDict(request, user)
-                    json.append(j)
-                else:
-                    if gender == user_gender:
+            if user.first_name:
+                dob = user.profile.date_of_birth
+                age = abs(date.today().year - dob.year)
+                user_gender = user.profile.gender
+                if min_age <= age <= max_age:
+                    if gender is None:
                         j = getUserDict(request, user)
                         json.append(j)
+                    else:
+                        if gender == user_gender:
+                            j = getUserDict(request, user)
+                            json.append(j)
         return JsonResponse({"current_user":getUserDict(request, current_user),"others":json}, safe=False)
     return HttpResponse("POST todo")
 
@@ -129,7 +130,7 @@ def liked_user(request, user_id):
         'You have a new match!',
         'Congratulations, {} you have been liked by {}'.format(user_to_like.first_name, current_user.first_name),
         'apikey',
-        [user_to_like.profile.email])
+        [user_to_like.email])
         email.send()
     return HttpResponse("Success")
 

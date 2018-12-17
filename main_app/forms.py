@@ -86,12 +86,9 @@ class SignupForm(UserCreationForm):
     def save(self, commit=True):
         user = super().save(commit=False)
         user.email = self.cleaned_data['email']
-        user.save()
-        profile = Profile.objects.get(user=user)
-        profile.email = self.cleaned_data['email']
         if commit:
-            profile.save()
-        return profile
+            user.save()
+        return user
 
 class ProfileCreationForm(forms.ModelForm):
     class Meta:
