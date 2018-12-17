@@ -13,8 +13,9 @@ def getUserDict(request, user):
     liked = False
     if current_user.profile in user.profile.profile_connections.all():
         liked = True
+    hobbies = []
     for hobby in user.profile.hobbies.all():
-        hobbies.append(str(hobby))
+        hobbies.append({"value" : hobby.id, "name" : str(hobby)})
     return {
         "id" : user.id,
         "first_name" : user.first_name,
@@ -23,7 +24,7 @@ def getUserDict(request, user):
         "profile_pic" : user.profile.profile_pic.url if user.profile.profile_pic else '',
         "gender" : user.profile.gender,
         "date_of_birth" : user.profile.date_of_birth,
-        "hobbies" : hobbies,
+        "result" : hobbies,
         "liked" : liked
     }
 
