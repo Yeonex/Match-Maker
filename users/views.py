@@ -73,9 +73,9 @@ def index(request):
 def user_info(request, user_id):
     #get request for user
     user = get_object_or_404(User, pk=user_id)
-    hobbies = {}
+    hobbies = []
     for hobby in user.profile.hobbies.all():
-        hobbies[hobby.id] = str(hobby)
+        hobbies.append({"value" : hobby.id, "name" : str(hobby)})
     json = {
         "first_name" : user.first_name,
         "last_name" : user.last_name,
@@ -83,7 +83,7 @@ def user_info(request, user_id):
         "profile_pic" : user.profile.profile_pic.url,
         "gender" : user.profile.gender,
         "date_of_birth" : user.profile.date_of_birth,
-        "hobbies" : hobbies,
+        "result" : hobbies,
         "liked_count" : user.profile.profile_connections.count()
         }
     return JsonResponse(json, safe=False)
