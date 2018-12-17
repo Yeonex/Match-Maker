@@ -12,10 +12,10 @@
     <h1 class="col-6 display-3">Matching site</h1>
     <nav class="col-4 align-items-center justify-content-end row">
         <div class="col-auto">
-            <a href="{% url 'main_app:index' %}">Home</a>
+            <a href="{% url 'main_app:index' %}"><i class="fas fa-home fa-fw"></i> Home</a>
         </div>
         <div class="col-auto">
-            <a href="{% url 'main_app:logout' %}?next={{ request.path }}">Logout</a>
+            <a href="{% url 'main_app:logout' %}?next={{ request.path }}"><i class="fas fa-sign-out-alt fa-fw"></i> Logout</a>
         </div>
     </nav>
 </div>

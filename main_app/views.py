@@ -1,24 +1,36 @@
 from django.shortcuts import render, redirect
-from django.http import HttpResponse
+from django.http import HttpResponse, QueryDict, JsonResponse
 from django.views.decorators.http import require_http_methods
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import login, authenticate
-from .forms import SignupForm
+from .forms import SignupForm, ProfileCreationForm
+from users.models import Profile
 
 @login_required
 @require_http_methods(["GET"])
 def index(request):
-    return render(request, 'main_app/index.html')
+    if(request.user.first_name):
+        return render(request, 'main_app/index.html')
+    return redirect('main:profile')
 
 @login_required
-@require_http_methods(["GET"])
+@require_http_methods(["GET", "POST"])
 def profile(request):
-    return render(request, 'main_app/profile.html')
+    profile = Profile.objects.get(user=request.user)
+    if request.method == "POST":
+        form = ProfileCreationForm(request.POST, request.FILES, instance=profile)
+        if form.is_valid():
+            form.save()
+            return redirect('main_app:index')
+        return render(request, 'main_app/create_profile.html', {"form":form})
+    if request.user.first_name:
+        return render(request, 'main_app/profile.html')
+    return render(request, "main_app/create_profile.html", {"form":ProfileCreationForm(instance=profile)})
 
 @require_http_methods(["GET", "POST"])
 def sign_up(request):
     if request.user.is_authenticated:
-        return redirect('home')
+        return redirect('index')
     if request.method == "POST":
         form = SignupForm(request.POST)
         if form.is_valid():

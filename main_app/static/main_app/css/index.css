@@ -65,21 +65,3 @@
     transform: scale(0.8);
     transition: none;
 }
-
-/* #profiles:hover > .profile-card{
-    opacity: 0.75;
-}
-
-#profiles:hover > .profile-card:hover{
-    opacity: 1;
-} */
-
-input.search{
-    border-top-right-radius: 0em;
-    border-bottom-right-radius: 0em;
-}
-
-button.search{
-    border-top-left-radius: 0em;
-    border-bottom-left-radius: 0em;
-}

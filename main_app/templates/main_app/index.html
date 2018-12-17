@@ -12,26 +12,41 @@
     <h1 class="col-6 display-3">Matching site</h1>
     <nav class="col-4 align-items-center justify-content-end row">
         <div class="col-auto">
-            <a href="{% url 'main_app:profile' %}">Profile</a>
+            <a href="{% url 'main_app:profile' %}"><i class="fas fa-user fa-fw"></i> Profile</a>
         </div>
         <div class="col-auto">
-            <a href="{% url 'main_app:logout' %}?next={{ request.path }}">Logout</a>
+            <a href="{% url 'main_app:logout' %}?next={{ request.path }}"><i class="fas fa-sign-out-alt fa-fw"></i> Logout</a>
         </div>
     </nav>
 </div>
 <div class="row filtering mt-3">
-    <div class="col-10">
+    <div class="col-12">
         <div class="row no-gutters">
-            <div class="col-11">
-                <input class="form-control w-100 search" id="search" placeholder="Search">
-            </div>
-            <div class="col-1">
-                <button class="btn btn-primary w-100 search">Search</button>
+            <div class="col-12 input-group">
+                <div class="input-group-prepend">
+                    <span class="input-group-text"><i class="fas fa-search fa-fw"></i></span>
+                </div>
+                <input class="form-control search" id="search" placeholder="Search">
             </div>
         </div>
     </div>
+</div>
+<div id="filters" class="row filter-options mt-3 hidden">
+    <div class="col-6 input-group">
+        <div class="input-group-prepend"><span class="input-group-text">Age</span></div>
+        <input type="number" min="18" class="form-control" placeholder="Minimum">
+        <input type="number" min="18" class="form-control" placeholder="Maximum">
+    </div>
+    <div class="col-4 input-group">
+        <div class="input-group-prepend"><span class="input-group-text">Gender</span></div>
+        <select class="form-control">
+            <option>Any</option>
+            <option>Male</option>
+            <option>Female</option>
+        </select>
+    </div>
     <div class="col-2">
-        <button class="btn btn-primary w-100">Filter</button>
+        <button class="btn btn-primary w-100" id="btn-filter">Filter</button>
     </div>
 </div>
 <div class="row mt-4" id="profiles">

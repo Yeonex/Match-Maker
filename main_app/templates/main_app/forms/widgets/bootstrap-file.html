@@ -1,0 +1,8 @@
+<span class="input-group">
+    <label class="input-group-prepend">
+        <span class="btn btn-primary">
+            Choose file<input type="file" style="display: none;" name="{{ widget.name }}"{% include "django/forms/widgets/attrs.html" %}>
+        </span>
+    </label>
+    <input type="text" class="form-control" readonly>
+</span>
