@@ -66,7 +66,7 @@ def index(request):
                     if gender == user_gender:
                         j = getUserDict(request, user)
                         json.append(j)
-            return JsonResponse(json, safe=False)
+                    return JsonResponse({"current_user":getUserDict(request, current_user),"others":json}, safe=False)
         return JsonResponse({"current_user":getUserDict(request, current_user),"others":json}, safe=False)
     return HttpResponse("POST todo")
 
