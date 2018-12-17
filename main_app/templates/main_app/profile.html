@@ -32,6 +32,8 @@
                 <div>Gender: <span id="gender">M</span></div>
                 <div>Date of birth: <span id="dob">1st Jan 2000</span></div>
                 <div>Hobbies: <span id="hobbies">Hobby 1, Hobby 2</span></div>
+				<div>Bio:<p id="bio"></p>
+				</div>
             </div>
             <div class="col edit-form" id="edit-form" style="display: none">
                 <div class="form-group mb-3">
@@ -59,6 +61,12 @@
                     <label for="list_hobbies" class="col-auto mt-2">Hobbies:</label>
     				<div class="col">
                         <select name="hobbies" id="list-hobbies" multiple="" class="form-control"></select>
+                    </div>
+                </div>
+				<div class="form-group row mb-3">
+                    <label for="user_bio" class="col-auto mt-2">Bio:</label>
+    				<div class="col">
+                        <textarea row="10" cols="50" id="bio-edit" class="form-control"></textarea>
                     </div>
                 </div>
 				<div class="text-right">

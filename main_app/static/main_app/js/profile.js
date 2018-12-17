@@ -6,13 +6,14 @@ function getGender(g){
 	}
 }
 
-function getProfileCard(picture, name, age, gender, hobbies){
+function getProfileCard(picture, name, age, gender,bio, hobbies){
 	$("#name").text(name);
 	$("#gender").text(getGender(gender));
 	$("#dob").text(age);
 	$("#hobbies").text(hobbies.map((hobby)=>{return hobby.name}).join(", "));
 	if(picture)
 		$("#profile-picture").css("background-image","url("+picture+")");
+	$("#bio").text(bio);
 }
 
 function toggleEditForm(){
@@ -28,6 +29,7 @@ function toggleEditForm(){
 		for(let i = 0; i < user.hobbies.length; i++){
 			$('#hobby'+user.hobbies[i].value).prop('selected', true);
 		}
+		$("#bio-edit").val(user.bio);
 	}else{
 		//Cancel
 		$('#edit').removeClass('cancel').addClass('edit').addClass('btn-primary').removeClass('btn-danger');
@@ -40,7 +42,7 @@ $(document).ready(function(){
 		type:"GET",
 		success:function(data){
 			window.user = data;
-			$('#info').append(getProfileCard(data.profile_pic, data.first_name + " " + data.last_name , data.date_of_birth, data.gender, data.hobbies));
+			$('#info').append(getProfileCard(data.profile_pic, data.first_name + " " + data.last_name , data.date_of_birth, data.gender, data.bio, data.hobbies));
 		}
 	});
 	$.ajax({
@@ -64,7 +66,9 @@ $(document).ready(function(){
 		let g = $("#gender-edit-info").val();
 		let d = $("#dob-edit").first().val();
 		let h = $("#list-hobbies").val();
-		let data = $.param({name_0:n,name_1:l,gender:g,date_of_birth:d});
+		let b = $("#bio-edit").val();
+		console.log(b);
+		let data = $.param({name_0:n,name_1:l,gender:g,date_of_birth:d,bio:b});
 		for(let i = 0; i < h.length; i++){
 			data += "&hobbies="+h[i];
 		}
@@ -75,7 +79,7 @@ $(document).ready(function(){
 			success:function(data){
 				toggleEditForm();
 				user = data.user;
-				getProfileCard(user.profile_pic, user.first_name + ' ' + user.last_name, user.date_of_birth, user.gender, user.hobbies);
+				getProfileCard(user.profile_pic, user.first_name + ' ' + user.last_name, user.date_of_birth, user.gender, user.bio, user.hobbies);
 			}
 		});
 	});
