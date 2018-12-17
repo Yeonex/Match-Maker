@@ -5,8 +5,7 @@ from django.contrib.auth.models import User
 from django.views.decorators.http import require_http_methods
 from django.contrib.auth.decorators import login_required
 from django.core.mail import send_mail, EmailMessage
-
-#from django.views.decorators.csrf import csrf_exempt
+from datetime import date
 
 def getUserDict(request, user):
     current_user = request.user
@@ -32,14 +31,35 @@ def getUserDict(request, user):
 def index(request):
     #get and post in index for posting
     if request.method == "GET":
+        if 'min_age' in request.GET:
+            min_age = int(request.GET['min_age'])
+        else:
+            min_age = 0
+        if 'max_age' in request.GET:
+            max_age = int(request.GET['max_age'])
+        else:
+            max_age = 200
+        if 'gender' in request.GET:
+            gender = request.GET['gender'].capitalize()
+        else:
+            gender = None
         json = []
         current_user = request.user
         users = User.objects.all()
         for user in users:
+            dob = user.profile.date_of_birth
+            age = date.today().year - dob.year
+            user_gender = user.profile.gender
             if user.id == current_user.id:
                 continue
-            j = getUserDict(request, user)
-            json.append(j)
+            if min_age <= age <= max_age:
+                if gender is None:
+                    j = getUserDict(request, user)
+                    json.append(j)
+                else:
+                    if gender == user_gender:
+                        j = getUserDict(request, user)
+                        json.append(j)
         return JsonResponse({"current_user":getUserDict(request, current_user),"others":json}, safe=False)
     return HttpResponse("POST todo")
 
@@ -64,8 +84,13 @@ def user_info(request, user_id):
 
 @require_http_methods(["GET", "PUT"])
 def current_user_info(request):
-    #if request.method == "PUT":
-
+    if request.method == "PUT":
+        request.PUT = QueryDict(request.body)
+        form = ProfileCreationForm(request.PUT, request.FILES, instance=profile)
+        if form.is_valid():
+            form.save()
+            return JsonResponse({"status":"success"})
+        return JsonResponse(form.errors, safe=False, status=400)
     return JsonResponse(getUserDict(request, request.user), safe=False)
 
 def get_liked_users(request):
@@ -93,18 +118,7 @@ def liked_user(request, user_id):
         email.send()
     return HttpResponse("Success")
 
-@require_http_methods(["GET"])
-def filter_by_age(request, max_age, min_age):
-    json = []
-    current_user = request.user
-    users = User.objects.all()
-    for user in users:
-        age = Profile.get_age(user.id)
-        if min_age <= age <= max_age:
-            j = getUserDict(request, user)
-            json.append(j)
 
-    return JsonResponse({"current_user": getUserDict(request, current_user), "others": json}, safe=False)
 
 @require_http_methods(["GET"])
 def hobbies(request):
