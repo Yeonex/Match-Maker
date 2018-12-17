@@ -24,7 +24,7 @@ def getUserDict(request, user):
         "profile_pic" : user.profile.profile_pic.url if user.profile.profile_pic else '',
         "gender" : user.profile.gender,
         "date_of_birth" : user.profile.date_of_birth,
-        "result" : hobbies,
+        "hobbies" : hobbies,
         "liked" : liked
     }
 
@@ -84,7 +84,7 @@ def user_info(request, user_id):
         "profile_pic" : user.profile.profile_pic.url,
         "gender" : user.profile.gender,
         "date_of_birth" : user.profile.date_of_birth,
-        "result" : hobbies,
+        "hobbies" : hobbies,
         "liked_count" : user.profile.profile_connections.count()
         }
     return JsonResponse(json, safe=False)
