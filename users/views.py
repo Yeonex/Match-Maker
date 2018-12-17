@@ -42,10 +42,10 @@ def index(request):
             try:
                 max_age = int(request.GET['max_age'])
             except:
-                max_age = 200
+                max_age = 10000
         else:
             max_age = 10000
-        if 'gender' in request.GET and request.GET['gender'] == "M" and request.GET['F']:
+        if request.GET['gender'] == "M" or request.GET['gender'] == "F":
             gender = request.GET['gender'].capitalize()
         else:
             gender = None
@@ -66,7 +66,6 @@ def index(request):
                     if gender == user_gender:
                         j = getUserDict(request, user)
                         json.append(j)
-                    return JsonResponse({"current_user":getUserDict(request, current_user),"others":json}, safe=False)
         return JsonResponse({"current_user":getUserDict(request, current_user),"others":json}, safe=False)
     return HttpResponse("POST todo")
 
