@@ -9,7 +9,7 @@ https://docs.djangoproject.com/en/2.1/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/2.1/ref/settings/
 """
-
+import django_heroku
 import os
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
@@ -25,7 +25,7 @@ SECRET_KEY = '%x9o44aj#pri2sosdmb+@2sbf)9bny=5+h%qlbe2f$nu*kr72k'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['0.0.0.0', 'localhost']
 
 #EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_USE_TLS = True
@@ -137,3 +137,5 @@ STATICFILES_DIRS = (os.path.join('static'),)
 LOGIN_URL = '/login/'
 
 LOGIN_REDIRECT_URL = '/'
+
+django_heroku.settings(locals())
